@@ -5,8 +5,8 @@ navbar:
   left:
   - text: "Home"
     href: index.html
-  - text: "Speed and Distance"
-    href: speed-and-distance.html
+  - text: "Plus/Minus Analysis"
+    href: ssn2020-plusMinus.html
 output:
   html_document:
     self_contained: no
