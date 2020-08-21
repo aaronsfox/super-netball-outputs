@@ -546,6 +546,11 @@ body{
   font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 12pt;
 }
+/* Headers */
+h1{
+  font-size: 32px;
+  font-weight: bold;
+}
 
 .author,.date{
     display: none;
