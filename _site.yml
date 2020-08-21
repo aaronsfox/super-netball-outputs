@@ -1,0 +1,13 @@
+name: "Super Netball Reports"
+output_dir: "docs"
+navbar:
+  title: "Super Netball Reports"
+  left:
+  - text: "Home"
+    href: index.html
+  - text: "Speed and Distance"
+    href: speed-and-distance.html
+output:
+  html_document:
+    self_contained: no
+    theme: cosmo
