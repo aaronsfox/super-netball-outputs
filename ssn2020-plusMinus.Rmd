@@ -575,7 +575,7 @@ h1{
   font-weight: 600;
 }
 
-plusMinus-table {
+.plusMinus-table {
   margin-bottom: 20px;
 }
 

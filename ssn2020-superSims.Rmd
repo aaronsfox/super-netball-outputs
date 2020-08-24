@@ -1,0 +1,471 @@
+---
+title: "Super Shot Simulator for Super Netball 2020"
+author: "Aaron Fox"
+date: "24/08/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+#Set the libPath to the conda environment
+#Run this to reset the library paths
+###.libPaths("C:/Users/aafox/AppData/Local/Continuum/anaconda3/envs/super_netball_analysis_r/Lib/R/library")
+
+knitr::opts_chunk$set(echo = FALSE, cache = TRUE)
+```
+
+# Suncorp Super Netball 2020: Super Shot Simulator
+
+![](Images/csr-deakin.png)
+
+**Performance insights by Deakin's Centre for Sport Research. Please feel free to contact the author of this work, Aaron Fox ([aaron.f@deakin.edu.au](mailto:aaron.f@deakin.edu.au)), if you have any questions about the analyses.**
+
+TODO: add introduction text...
+
+```{r teamSimResults, echo = FALSE}
+
+#Load libraries
+library(reactable)
+library(htmltools)
+
+#Read in data
+data <- read.csv("data/standardSuperSimProportionSummary_upToRound6.csv", stringsAsFactors = FALSE)
+actualProp <- read.csv("data/actualSuperShotProportion_upToRound6.csv", stringsAsFactors = FALSE)
+
+#Create function for colour mapping
+make_color_pal <- function(colors, bias = 1) {
+  get_color <- colorRamp(colors, bias = 2)
+  function(x) rgb(get_color(x), maxColorValue = 255)
+}
+
+#Create plus minus colour map
+valColourPal <- make_color_pal(c("#dc9195", "#e3a9ab", "#e9c1c2", "#edd9d9", "#f1f1f1","#d7e9d9","#bde0c3","#a2d8ac","#86cf96"), bias = 2)
+
+#Create table
+team_superSim_tbl <- reactable(
+  
+  #Set data
+  data,
+  
+  #Set pagination
+  pagination = FALSE,
+  
+  #Set parameters
+  highlight = TRUE,
+  searchable = FALSE,
+  
+  #Set the default sort colum
+  defaultSorted = "X80..100.",
+  defaultSortOrder = "desc",
+  
+  #Set column groups
+  defaultColGroup = colGroup(headerClass = "group-header"),
+  columnGroups = list(
+    colGroup(name = "Shot Statistics", columns = c("meanShots","minShots", "maxShots")),
+    colGroup(name = "% of Simulations Top Score was Achieved with Different Super Shot Proportions", columns = c("X0..20.","X20..40.","X40..60.","X60..80.","X80..100."))
+  ),
+  
+  #Set default column parameters
+  defaultColDef = colDef(headerClass = "header", align = "left"),
+  
+  #Create a list of the columns
+  columns = list(
+    
+    #Create the team column
+    squadNickname = colDef(
+      name = "Team",
+      filterable = FALSE,
+      style = list(fontSize = "12px", fontWeight = "bold"),
+      headerStyle = list(fontWeight = 700),
+      cell = function(value) {
+        div(class = "team",
+            img(class = "logo", alt = paste(value, "logo"), src = sprintf("Images/%s.png", value))
+            #div(class = "team-name", value)
+            )
+      },
+      maxWidth = 60
+    ),
+    
+    #Create shot statistic columns
+    
+    #Mean shots
+    meanShots = colDef(
+      name = "Mean Shots",
+      defaultSortOrder = "desc",
+      maxWidth = 75,
+      align = "center",
+      class = "cell number",
+      headerStyle = list(fontWeight = 700),
+      format = colFormat(digits = 2)
+    ),
+    
+    #Min shots
+    minShots = colDef(
+      name = "Min. Shots",
+      defaultSortOrder = "desc",
+      maxWidth = 75,
+      align = "center",
+      class = "cell number",
+      headerStyle = list(fontWeight = 700),
+      format = colFormat(digits = 0)
+    ),
+    
+    #Max shots
+    maxShots = colDef(
+      name = "Max. Shots",
+      defaultSortOrder = "desc",
+      maxWidth = 75,
+      align = "center",
+      class = "cell number",
+      headerStyle = list(fontWeight = 700),
+      format = colFormat(digits = 0)
+    ),
+    
+    #Add super shot proportions
+    
+    #0-20%
+    X0..20. = colDef(
+      name = "0%-20%",
+      defaultSortOrder = "desc",
+      maxWidth = 100,
+      align = "center",
+      headerStyle = list(fontWeight = 700),
+      cell = function(value,index) {
+        #Get the min val for the current index
+        minVal <- min(data$X0..20.[index],
+                      data$X20..40.[index],
+                      data$X40..60.[index],
+                      data$X60..80.[index],
+                      data$X80..100.[index])
+        #Get the max val for the current index
+        maxVal <- max(data$X0..20.[index],
+                      data$X20..40.[index],
+                      data$X40..60.[index],
+                      data$X60..80.[index],
+                      data$X80..100.[index])
+        #Set scaled value for colour
+        scaled <- (value - minVal) / (maxVal - minVal)
+        #Set colour
+        color <- valColourPal(scaled)
+        #Set the cell value
+        value <- formatC(paste0(round(value * 100,1), "%"), width = 4)
+        #Check to see which class to use based on the current teams super shot proportion
+        teamProp <- actualProp$actualProp[index]
+        if (teamProp <= 0.20) {
+          div(class = "score-valProp", style = list(background = color), value)
+        } else {
+          div(class = "score-val", style = list(background = color), value)
+        }
+      }
+    ),
+    
+    #20-40%
+    X20..40. = colDef(
+      name = "20%-40%",
+      defaultSortOrder = "desc",
+      maxWidth = 100,
+      align = "center",
+      headerStyle = list(fontWeight = 700),
+      cell = function(value,index) {
+        #Get the min val for the current index
+        minVal <- min(data$X0..20.[index],
+                      data$X20..40.[index],
+                      data$X40..60.[index],
+                      data$X60..80.[index],
+                      data$X80..100.[index])
+        #Get the max val for the current index
+        maxVal <- max(data$X0..20.[index],
+                      data$X20..40.[index],
+                      data$X40..60.[index],
+                      data$X60..80.[index],
+                      data$X80..100.[index])
+        #Set scaled value for colour
+        scaled <- (value - minVal) / (maxVal - minVal)
+        #Set colour
+        color <- valColourPal(scaled)
+        #Set the cell value
+        value <- formatC(paste0(format(round(value * 100, digits=1), nsmall = 1), "%"), width = 4)
+        #Check to see which class to use based on the current teams super shot proportion
+        teamProp <- actualProp$actualProp[index]
+        if ((teamProp > 0.20) & (teamProp <= 0.40)) {
+          div(class = "score-valProp", style = list(background = color), value)
+        } else {
+          div(class = "score-val", style = list(background = color), value)
+        }
+      }
+    ),
+    
+    #40-60%
+    X40..60. = colDef(
+      name = "40%-60%",
+      defaultSortOrder = "desc",
+      maxWidth = 100,
+      align = "center",
+      headerStyle = list(fontWeight = 700),
+      cell = function(value,index) {
+        #Get the min val for the current index
+        minVal <- min(data$X0..20.[index],
+                      data$X20..40.[index],
+                      data$X40..60.[index],
+                      data$X60..80.[index],
+                      data$X80..100.[index])
+        #Get the max val for the current index
+        maxVal <- max(data$X0..20.[index],
+                      data$X20..40.[index],
+                      data$X40..60.[index],
+                      data$X60..80.[index],
+                      data$X80..100.[index])
+        #Set scaled value for colour
+        scaled <- (value - minVal) / (maxVal - minVal)
+        #Set colour
+        color <- valColourPal(scaled)
+        #Set the cell value
+        value <- formatC(paste0(format(round(value * 100, digits=1), nsmall = 1), "%"), width = 4)
+        #Check to see which class to use based on the current teams super shot proportion
+        teamProp <- actualProp$actualProp[index]
+        if ((teamProp > 0.40) & (teamProp <= 0.60)) {
+          div(class = "score-valProp", style = list(background = color), value)
+        } else {
+          div(class = "score-val", style = list(background = color), value)
+        }
+      }
+    ),
+    
+    #60-80%
+    X60..80. = colDef(
+      name = "60%-80%",
+      defaultSortOrder = "desc",
+      maxWidth = 100,
+      align = "center",
+      headerStyle = list(fontWeight = 700),
+      cell = function(value,index) {
+        #Get the min val for the current index
+        minVal <- min(data$X0..20.[index],
+                      data$X20..40.[index],
+                      data$X40..60.[index],
+                      data$X60..80.[index],
+                      data$X80..100.[index])
+        #Get the max val for the current index
+        maxVal <- max(data$X0..20.[index],
+                      data$X20..40.[index],
+                      data$X40..60.[index],
+                      data$X60..80.[index],
+                      data$X80..100.[index])
+        #Set scaled value for colour
+        scaled <- (value - minVal) / (maxVal - minVal)
+        #Set colour
+        color <- valColourPal(scaled)
+        #Set the cell value
+        value <- formatC(paste0(format(round(value * 100, digits=1), nsmall = 1), "%"), width = 4)
+        #Check to see which class to use based on the current teams super shot proportion
+        teamProp <- actualProp$actualProp[index]
+        if ((teamProp > 0.60) & (teamProp <= 0.80)) {
+          div(class = "score-valProp", style = list(background = color), value)
+        } else {
+          div(class = "score-val", style = list(background = color), value)
+        }
+      }
+    ),
+    
+    #80-100%
+    X80..100. = colDef(
+      name = "80%-100%",
+      defaultSortOrder = "desc",
+      maxWidth = 100,
+      align = "center",
+      headerStyle = list(fontWeight = 700),
+      cell = function(value,index) {
+        #Get the min val for the current index
+        minVal <- min(data$X0..20.[index],
+                      data$X20..40.[index],
+                      data$X40..60.[index],
+                      data$X60..80.[index],
+                      data$X80..100.[index])
+        #Get the max val for the current index
+        maxVal <- max(data$X0..20.[index],
+                      data$X20..40.[index],
+                      data$X40..60.[index],
+                      data$X60..80.[index],
+                      data$X80..100.[index])
+        #Set scaled value for colour
+        scaled <- (value - minVal) / (maxVal - minVal)
+        #Set colour
+        color <- valColourPal(scaled)
+        #Set the cell value
+        value <- formatC(paste0(format(round(value * 100, digits=1), nsmall = 1), "%"), width = 4)
+        #Check to see which class to use based on the current teams super shot proportion
+        teamProp <- actualProp$actualProp[index]
+        if (teamProp > 0.80) {
+          div(class = "score-valProp", style = list(background = color), value)
+        } else {
+          div(class = "score-val", style = list(background = color), value)
+        }
+      }
+    )
+    
+  ), #end columns list
+  
+  #Set reactable options
+  showSortIcon = FALSE,
+  borderless = TRUE,
+  class = "superSim-tbl"
+  
+) #end reactable
+
+#Set table options
+div(class = "team-superSim",
+  div(class = "title",
+    h2("Suncorp Super Netball 2020: Power 5 Team Shot Simulations"),
+    "Rate of maximum score achieved by each team under different super shot proportions. Higher percentages indicate the team scored higher more frequently with the relative proportion of super shots (across 1,000 simulations for each proportion) The actual proportion each team uses is circled."
+  ),
+  team_superSim_tbl
+)
+
+```
+
+---
+
+Data through 6 rounds of Super Netball 2020. Source: [Champion Data Match Centre](https://mc.championdata.com/super_netball/)
+
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+
+```{r ref.label="table", eval=FALSE}
+```
+
+```{r}
+tags$link(href = "https://fonts.googleapis.com/css?family=Karla:400,700|Fira+Mono&display=fallback", rel = "stylesheet")
+```
+
+```{css}
+
+/* Whole document: */
+body{
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12pt;
+}
+/* Headers */
+h1{
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.author,.date{
+    display: none;
+}
+
+.team-superSim {
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+}
+
+.title {
+  margin: 18px 0;
+  font-size: 16px;
+}
+
+.title h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+superSim-table {
+  margin-bottom: 20px;
+}
+
+/* Align header text to the bottom */
+.header,
+.group-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.header {
+  border-bottom-color: #555;
+  font-size: 13px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+/* Highlight headers when sorting */
+.header:hover,
+.header[aria-sort="ascending"],
+.header[aria-sort="descending"] {
+  background-color: #eee;
+}
+
+.number {
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.border-left {
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  border-left: 2px solid #555;
+}
+
+.team {
+  display: flex;
+  align-items: right;
+}
+
+.team-name {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.player-name {
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.logo {
+  margin-right: 8px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  height: 30px;
+}
+
+.score-val {
+  display: inline-block;
+  padding: 2px 12px;
+  border-radius: 15px;
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.score-valProp {
+  display: inline-block;
+  padding: 2px 12px;
+  border-radius: 15px;
+  border: 2px solid rgba(0, 0, 0, 1);
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+```
+
+```{css echo=FALSE}
+/* rmarkdown html documents */
+.main-container {
+  max-width: 1054px !important;
+}
+
+h1.title {
+  display: none;
+}
+
+/* pkgdown articles */
+.contents {
+  width: 1054px;
+}
+
+.page-header {
+  display: none;
+}
+```

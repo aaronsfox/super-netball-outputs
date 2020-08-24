@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Aaron Fox" />
+
+
+<title>Super Shot Simulator for Super Netball 2020</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/core-js-2.5.3/shim.min.js"></script>
+<script src="site_libs/react-16.12.0/react.min.js"></script>
+<script src="site_libs/react-16.12.0/react-dom.min.js"></script>
+<script src="site_libs/reactwidget-1.0.0/react-tools.js"></script>
+<script src="site_libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<script src="site_libs/reactable-binding-0.1.0.1/reactable.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Super Shot Simulator for Super Netball 2020</h1>
+<h4 class="author"><em>Aaron Fox</em></h4>
+<h4 class="date"><em>24/08/2020</em></h4>
+
+</div>
+
+
+<div id="suncorp-super-netball-2020-super-shot-simulator" class="section level1">
+<h1>Suncorp Super Netball 2020: Super Shot Simulator</h1>
+<p><img src="Images/csr-deakin.png" /></p>
+<p><strong>Performance insights by Deakin’s Centre for Sport Research. Please feel free to contact the author of this work, Aaron Fox (<a href="mailto:aaron.f@deakin.edu.au">aaron.f@deakin.edu.au</a>), if you have any questions about the analyses.</strong></p>
+<p>TODO: add introduction text…</p>
+<div class="team-superSim">
+<div class="title">
+<h2>Suncorp Super Netball 2020: Power 5 Team Shot Simulations</h2>
+Rate of maximum score achieved by each team under different super shot proportions. Higher percentages indicate the team scored higher more frequently with the relative proportion of super shots (across 1,000 simulations for each proportion) The actual proportion each team uses is circled.
+</div>
+<div id="htmlwidget-c663567695186468aa28" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-c663567695186468aa28">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"squadNickname":["Fever","Firebirds","GIANTS","Lightning","Magpies","Swifts","Thunderbirds","Vixens"],"X0..20.":[0.145,0.11,0.03,0.062,0.018,0.018,0.1,0.037],"X20..40.":[0.136,0.242,0.179,0.071,0.218,0.107,0.179,0.114],"X40..60.":[0.211,0.134,0.114,0.271,0.183,0.187,0.096,0.169],"X60..80.":[0.173,0.267,0.327,0.188,0.336,0.274,0.241,0.237],"X80..100.":[0.335,0.247,0.35,0.408,0.245,0.414,0.384,0.443],"meanShots":[6.492,5.189,5.516,7.239,4.805,7.661,6.006,6.248],"minShots":[6,4,5,7,4,7,5,5],"maxShots":[7,6,6,8,5,9,7,7]},"columns":[{"accessor":"squadNickname","name":"Team","type":"character","align":"left","headerClassName":"header","filterable":false,"cell":[{"name":"div","attribs":{"className":"team"},"children":[{"name":"img","attribs":{"alt":"Fever logo","src":"Images/Fever.png","className":"logo"},"children":[]}]},{"name":"div","attribs":{"className":"team"},"children":[{"name":"img","attribs":{"alt":"Firebirds logo","src":"Images/Firebirds.png","className":"logo"},"children":[]}]},{"name":"div","attribs":{"className":"team"},"children":[{"name":"img","attribs":{"alt":"GIANTS logo","src":"Images/GIANTS.png","className":"logo"},"children":[]}]},{"name":"div","attribs":{"className":"team"},"children":[{"name":"img","attribs":{"alt":"Lightning logo","src":"Images/Lightning.png","className":"logo"},"children":[]}]},{"name":"div","attribs":{"className":"team"},"children":[{"name":"img","attribs":{"alt":"Magpies logo","src":"Images/Magpies.png","className":"logo"},"children":[]}]},{"name":"div","attribs":{"className":"team"},"children":[{"name":"img","attribs":{"alt":"Swifts logo","src":"Images/Swifts.png","className":"logo"},"children":[]}]},{"name":"div","attribs":{"className":"team"},"children":[{"name":"img","attribs":{"alt":"Thunderbirds logo","src":"Images/Thunderbirds.png","className":"logo"},"children":[]}]},{"name":"div","attribs":{"className":"team"},"children":[{"name":"img","attribs":{"alt":"Vixens logo","src":"Images/Vixens.png","className":"logo"},"children":[]}]}],"maxWidth":60,"style":{"fontSize":"12px","fontWeight":"bold"},"headerStyle":{"fontWeight":700}},{"accessor":"X0..20.","name":"0%-20%","type":"numeric","align":"center","headerClassName":"header","defaultSortDesc":true,"cell":[{"name":"div","attribs":{"style":{"background":"#E6B8B9"},"className":"score-val"},"children":["14.5%"]},{"name":"div","attribs":{"style":{"background":"#DC9195"},"className":"score-val"},"children":[" 11%"]},{"name":"div","attribs":{"style":{"background":"#DC9195"},"className":"score-val"},"children":["  3%"]},{"name":"div","attribs":{"style":{"background":"#DC9195"},"className":"score-val"},"children":["6.2%"]},{"name":"div","attribs":{"style":{"background":"#DC9195"},"className":"score-val"},"children":["1.8%"]},{"name":"div","attribs":{"style":{"background":"#DC9195"},"className":"score-val"},"children":["1.8%"]},{"name":"div","attribs":{"style":{"background":"#E2A6A8"},"className":"score-val"},"children":[" 10%"]},{"name":"div","attribs":{"style":{"background":"#DC9195"},"className":"score-val"},"children":["3.7%"]}],"maxWidth":100,"headerStyle":{"fontWeight":700}},{"accessor":"X20..40.","name":"20%-40%","type":"numeric","align":"center","headerClassName":"header","defaultSortDesc":true,"cell":[{"name":"div","attribs":{"style":{"background":"#DC9195"},"className":"score-val"},"children":["13.6%"]},{"name":"div","attribs":{"style":{"background":"#99D5A4"},"className":"score-val"},"children":["24.2%"]},{"name":"div","attribs":{"style":{"background":"#CBE5CF"},"className":"score-val"},"children":["17.9%"]},{"name":"div","attribs":{"style":{"background":"#E4AEB0"},"className":"score-valProp"},"children":["7.1%"]},{"name":"div","attribs":{"style":{"background":"#B4DDBB"},"className":"score-val"},"children":["21.8%"]},{"name":"div","attribs":{"style":{"background":"#F0EBEB"},"className":"score-val"},"children":["10.7%"]},{"name":"div","attribs":{"style":{"background":"#E9EEEA"},"className":"score-val"},"children":["17.9%"]},{"name":"div","attribs":{"style":{"background":"#EEE3E3"},"className":"score-val"},"children":["11.4%"]}],"maxWidth":100,"headerStyle":{"fontWeight":700}},{"accessor":"X40..60.","name":"40%-60%","type":"numeric","align":"center","headerClassName":"header","defaultSortDesc":true,"cell":[{"name":"div","attribs":{"style":{"background":"#D9E9DB"},"className":"score-valProp"},"children":["21.1%"]},{"name":"div","attribs":{"style":{"background":"#EDDBDB"},"className":"score-valProp"},"children":["13.4%"]},{"name":"div","attribs":{"style":{"background":"#EEF0EE"},"className":"score-val"},"children":["11.4%"]},{"name":"div","attribs":{"style":{"background":"#B7DEBE"},"className":"score-val"},"children":["27.1%"]},{"name":"div","attribs":{"style":{"background":"#C3E2C8"},"className":"score-valProp"},"children":["18.3%"]},{"name":"div","attribs":{"style":{"background":"#D1E7D4"},"className":"score-valProp"},"children":["18.7%"]},{"name":"div","attribs":{"style":{"background":"#DC9195"},"className":"score-valProp"},"children":["9.6%"]},{"name":"div","attribs":{"style":{"background":"#E3ECE4"},"className":"score-valProp"},"children":["16.9%"]}],"maxWidth":100,"headerStyle":{"fontWeight":700}},{"accessor":"X60..80.","name":"60%-80%","type":"numeric","align":"center","headerClassName":"header","defaultSortDesc":true,"cell":[{"name":"div","attribs":{"style":{"background":"#EEE2E2"},"className":"score-val"},"children":["17.3%"]},{"name":"div","attribs":{"style":{"background":"#86CF96"},"className":"score-val"},"children":["26.7%"]},{"name":"div","attribs":{"style":{"background":"#8ED19C"},"className":"score-valProp"},"children":["32.7%"]},{"name":"div","attribs":{"style":{"background":"#DBEADD"},"className":"score-val"},"children":["18.8%"]},{"name":"div","attribs":{"style":{"background":"#86CF96"},"className":"score-val"},"children":["33.6%"]},{"name":"div","attribs":{"style":{"background":"#B1DCB9"},"className":"score-val"},"children":["27.4%"]},{"name":"div","attribs":{"style":{"background":"#C5E3CA"},"className":"score-val"},"children":["24.1%"]},{"name":"div","attribs":{"style":{"background":"#C7E3CB"},"className":"score-val"},"children":["23.7%"]}],"maxWidth":100,"headerStyle":{"fontWeight":700}},{"accessor":"X80..100.","name":"80%-100%","type":"numeric","align":"center","headerClassName":"header","defaultSortDesc":true,"cell":[{"name":"div","attribs":{"style":{"background":"#86CF96"},"className":"score-val"},"children":["33.5%"]},{"name":"div","attribs":{"style":{"background":"#95D3A1"},"className":"score-val"},"children":["24.7%"]},{"name":"div","attribs":{"style":{"background":"#86CF96"},"className":"score-val"},"children":["35.0%"]},{"name":"div","attribs":{"style":{"background":"#86CF96"},"className":"score-val"},"children":["40.8%"]},{"name":"div","attribs":{"style":{"background":"#A8DAB1"},"className":"score-val"},"children":["24.5%"]},{"name":"div","attribs":{"style":{"background":"#86CF96"},"className":"score-val"},"children":["41.4%"]},{"name":"div","attribs":{"style":{"background":"#86CF96"},"className":"score-val"},"children":["38.4%"]},{"name":"div","attribs":{"style":{"background":"#86CF96"},"className":"score-val"},"children":["44.3%"]}],"maxWidth":100,"headerStyle":{"fontWeight":700}},{"accessor":"meanShots","name":"Mean Shots","type":"numeric","align":"center","headerClassName":"header","defaultSortDesc":true,"format":{"cell":{"digits":2},"aggregated":{"digits":2}},"maxWidth":75,"className":"cell number","headerStyle":{"fontWeight":700}},{"accessor":"minShots","name":"Min. Shots","type":"numeric","align":"center","headerClassName":"header","defaultSortDesc":true,"format":{"cell":{"digits":0},"aggregated":{"digits":0}},"maxWidth":75,"className":"cell number","headerStyle":{"fontWeight":700}},{"accessor":"maxShots","name":"Max. Shots","type":"numeric","align":"center","headerClassName":"header","defaultSortDesc":true,"format":{"cell":{"digits":0},"aggregated":{"digits":0}},"maxWidth":75,"className":"cell number","headerStyle":{"fontWeight":700}}],"columnGroups":[{"headerClassName":"group-header","name":"Shot Statistics","columns":["meanShots","minShots","maxShots"]},{"headerClassName":"group-header","name":"% of Simulations Top Score was Achieved with Different Super Shot Proportions","columns":["X0..20.","X20..40.","X40..60.","X60..80.","X80..100."]}],"defaultSortDesc":true,"defaultSorted":[{"id":"X80..100.","desc":true}],"defaultPageSize":8,"paginationType":"numbers","showPageInfo":true,"minRows":1,"highlight":true,"borderless":true,"showSortIcon":false,"className":"superSim-tbl","dataKey":"e904ce136ddd2d0e8f6425ceed2215f1"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+<hr />
+<p>Data through 6 rounds of Super Netball 2020. Source: <a href="https://mc.championdata.com/super_netball/">Champion Data Match Centre</a></p>
+<p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
+<link href="https://fonts.googleapis.com/css?family=Karla:400,700|Fira+Mono&amp;display=fallback" rel="stylesheet"/>
+<style type="text/css">
+
+/* Whole document: */
+body{
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12pt;
+}
+/* Headers */
+h1{
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.author,.date{
+    display: none;
+}
+
+.team-superSim {
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+}
+
+.title {
+  margin: 18px 0;
+  font-size: 16px;
+}
+
+.title h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+superSim-table {
+  margin-bottom: 20px;
+}
+
+/* Align header text to the bottom */
+.header,
+.group-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.header {
+  border-bottom-color: #555;
+  font-size: 13px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+/* Highlight headers when sorting */
+.header:hover,
+.header[aria-sort="ascending"],
+.header[aria-sort="descending"] {
+  background-color: #eee;
+}
+
+.number {
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.border-left {
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  border-left: 2px solid #555;
+}
+
+.team {
+  display: flex;
+  align-items: right;
+}
+
+.team-name {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.player-name {
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.logo {
+  margin-right: 8px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  height: 30px;
+}
+
+.score-val {
+  display: inline-block;
+  padding: 2px 12px;
+  border-radius: 15px;
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.score-valProp {
+  display: inline-block;
+  padding: 2px 12px;
+  border-radius: 15px;
+  border: 2px solid rgba(0, 0, 0, 1);
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+</style>
+<style type="text/css">
+/* rmarkdown html documents */
+.main-container {
+  max-width: 1054px !important;
+}
+
+h1.title {
+  display: none;
+}
+
+/* pkgdown articles */
+.contents {
+  width: 1054px;
+}
+
+.page-header {
+  display: none;
+}
+</style>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
