@@ -1,0 +1,768 @@
+---
+title: "Player Stats Data for Super Netball 2020"
+author: "Aaron Fox"
+date: "07/09/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = FALSE, cache = TRUE)
+
+#Load libraries
+library(reactable)
+library(htmltools)
+
+```
+
+# Suncorp Super Netball 2020: Player Metrics
+
+![](Images/csr-deakin.png)
+
+**Performance insights by Deakin's Centre for Sport Research. Please feel free to contact the author of this work, Aaron Fox ([aaron.f@deakin.edu.au](mailto:aaron.f@deakin.edu.au)), if you have any questions about the analyses.**
+
+The following tables provide summary metrics for players from Suncorp Super Netball 2020. Metrics are split into loose *attacking* and *defensive* categories.
+
+Attacking metrics include:
+
+- Centre Pass Receives
+- Circle Feeds
+- Circle Feeds with Shot Attempts
+- Goal Assists
+- General Play Turnovers
+- Intercept Passes Thrown
+
+Defensive metrics include:
+
+- Gains
+- Deflections
+- Deflections with Gain
+- Deflections with No Gain
+- Contact Penalties
+- Obstruction Penalties
+
+```{r attackingTable, echo = FALSE}
+
+#Read in data
+dataAttacking <- read.csv("data/individualPlayerStats_Attacking.csv", stringsAsFactors = FALSE)
+
+#Drop the player ID column
+dataAttacking <- subset(dataAttacking, select = -c(playerId))
+
+#Reorder team and player name columns
+dataAttacking <- dataAttacking[, c(2, 1, 3, 4, 10, 6, 12, 5, 11, 8, 14, 7, 13, 9, 15)]
+
+#Create function for colour mapping
+make_color_pal <- function(colors, bias = 1) {
+  get_color <- colorRamp(colors, bias = 2)
+  function(x) rgb(get_color(x), maxColorValue = 255)
+}
+
+#Create plus minus colour map
+higherBetter_colour <- make_color_pal(c("#dc9195", "#e3a9ab", "#e9c1c2", "#edd9d9", "#f1f1f1","#d7e9d9","#bde0c3","#a2d8ac","#86cf96"), bias = 2)
+lowerBetter_colour <- make_color_pal(c("#86cf96","#a2d8ac","#bde0c3","#d7e9d9","#f1f1f1","#edd9d9","#e9c1c2","#dc9195","#e3a9ab"), bias = 2)
+
+#Create table
+attackingStats_tbl <- reactable(
+  
+  #Set data
+  dataAttacking,
+  
+  #Set pagination
+  pagination = TRUE,
+  defaultPageSize = 20,
+  
+  #Set parameters
+  highlight = TRUE,
+  searchable = FALSE,
+
+  #Set the default sort column
+  defaultSorted = "playerName",
+  defaultSortOrder = "asc",
+  
+  #Set column groups
+  defaultColGroup = colGroup(headerClass = "group-header"),
+  columnGroups = list(
+    colGroup(name = "Centre Pass Rec.", columns = c("centrePassReceivesTotal","centrePassReceivesPer")),
+    colGroup(name = "Circle Feeds", columns = c("feedsTotal","feedsPer")),
+    colGroup(name = "Circle Feeds w/ Shot", columns = c("feedWithAttemptTotal","feedWithAttemptPer")),
+    colGroup(name = "Goal Assists", columns = c("goalAssistsTotal","goalAssistsPer")),
+    colGroup(name = "Turnovers", columns = c("generalPlayTurnoversTotal","generalPlayTurnoversPer")),
+    colGroup(name = "Intercepts Thrown", columns = c("interceptPassThrownTotal","interceptPassThrownPer"))
+  ),
+  
+  #Set default column parameters
+  defaultColDef = colDef(headerClass = "header", align = "left"),
+  
+  #Create a list of the columns
+  columns = list(
+    
+    #Create the team column
+    squadName = colDef(
+      name = "Team",
+      filterable = TRUE,
+      style = list(fontSize = "12px", fontWeight = "bold"),
+      headerStyle = list(fontWeight = 700),
+      cell = function(value) {
+        div(class = "team",
+            img(class = "logo", alt = paste(value, "logo"), src = sprintf("Images/%s.png", value))
+            #div(class = "team-name", value)
+            )
+      },
+      maxWidth = 60
+    ),
+    
+    #Create the player name column
+    playerName = colDef(
+      name = "Player",
+      defaultSortOrder = "asc",
+      align = "center",
+      maxWidth = 150,
+      filterable = TRUE,
+      class = "cell group",
+      headerStyle = list(fontWeight = 700),
+      style = list(fontSize = "14px"),
+      cell = function(value) {
+        div(class = "player-name", value)
+      },
+    ),
+    
+    #Create the duration played column
+    durationMins = colDef(
+      name = "Mins.",
+      defaultSortOrder = "desc",
+      maxWidth = 55,
+      align = "center",
+      class = "cell number",
+      headerStyle = list(fontWeight = 700),
+      format = colFormat(digits = 1)
+    ),
+    
+    #Create the disposals columns
+    #Total
+    disposalsTotal = colDef(
+      name = "Total",
+      defaultSortOrder = "desc",
+      maxWidth = 55,
+      align = "center",
+      class = "border-left",
+      headerStyle = list(fontWeight = 700),
+      format = colFormat(digits = 0)
+    ),
+    #Per
+    disposalsPer = colDef(
+      name = "Per 15",
+      defaultSortOrder = "desc",
+      maxWidth = 65,
+      align = "center",
+      headerStyle = list(fontWeight = 700),
+      cell = function(value) {
+        scaled <- (value - min(dataAttacking$disposalsPer)) / (max(dataAttacking$disposalsPer) - min(dataAttacking$disposalsPer))
+        color <- higherBetter_colour(scaled)
+        value <- format(round(value, 2), nsmall = 2)
+        div(class = "stat-rating", style = list(background = color), value)
+      }
+    ),
+    
+    #Create the passes columns
+    #Total
+    passesTotal = colDef(
+      name = "Total",
+      defaultSortOrder = "desc",
+      maxWidth = 55,
+      align = "center",
+      class = "border-left",
+      headerStyle = list(fontWeight = 700),
+      format = colFormat(digits = 0)
+    ),
+    #Per
+    passesPer = colDef(
+      name = "Per 15",
+      defaultSortOrder = "desc",
+      maxWidth = 65,
+      align = "center",
+      headerStyle = list(fontWeight = 700),
+      cell = function(value) {
+        scaled <- (value - min(dataAttacking$passesPer)) / (max(dataAttacking$passesPer) - min(dataAttacking$passesPer))
+        color <- higherBetter_colour(scaled)
+        value <- format(round(value, 2), nsmall = 2)
+        div(class = "stat-rating", style = list(background = color), value)
+      }
+    ),
+    
+    #Create the centre pass rec. columns
+    #Total
+    centrePassReceivesTotal = colDef(
+      name = "Total",
+      defaultSortOrder = "desc",
+      maxWidth = 55,
+      align = "center",
+      class = "border-left",
+      headerStyle = list(fontWeight = 700),
+      format = colFormat(digits = 0)
+    ),
+    #Per
+    centrePassReceivesPer = colDef(
+      name = "Per 15",
+      defaultSortOrder = "desc",
+      maxWidth = 65,
+      align = "center",
+      headerStyle = list(fontWeight = 700),
+      cell = function(value) {
+        scaled <- (value - min(dataAttacking$centrePassReceivesPer)) / (max(dataAttacking$centrePassReceivesPer) - min(dataAttacking$centrePassReceivesPer))
+        color <- higherBetter_colour(scaled)
+        value <- format(round(value, 2), nsmall = 2)
+        div(class = "stat-rating", style = list(background = color), value)
+      }
+    ),
+    
+    #Create the circle feeds columns
+    #Total
+    feedsTotal = colDef(
+      name = "Total",
+      defaultSortOrder = "desc",
+      maxWidth = 55,
+      align = "center",
+      class = "border-left",
+      headerStyle = list(fontWeight = 700),
+      format = colFormat(digits = 0)
+    ),
+    #Per
+    feedsPer = colDef(
+      name = "Per 15",
+      defaultSortOrder = "desc",
+      maxWidth = 65,
+      align = "center",
+      headerStyle = list(fontWeight = 700),
+      cell = function(value) {
+        scaled <- (value - min(dataAttacking$feedsPer)) / (max(dataAttacking$feedsPer) - min(dataAttacking$feedsPer))
+        color <- higherBetter_colour(scaled)
+        value <- format(round(value, 2), nsmall = 2)
+        div(class = "stat-rating", style = list(background = color), value)
+      }
+    ),
+    
+    #Create the circle feeds with shots columns
+    #Total
+    feedWithAttemptTotal = colDef(
+      name = "Total",
+      defaultSortOrder = "desc",
+      maxWidth = 55,
+      align = "center",
+      class = "border-left",
+      headerStyle = list(fontWeight = 700),
+      format = colFormat(digits = 0)
+    ),
+    #Per
+    feedWithAttemptPer = colDef(
+      name = "Per 15",
+      defaultSortOrder = "desc",
+      maxWidth = 65,
+      align = "center",
+      headerStyle = list(fontWeight = 700),
+      cell = function(value) {
+        scaled <- (value - min(dataAttacking$feedWithAttemptPer)) / (max(dataAttacking$feedWithAttemptPer) - min(dataAttacking$feedWithAttemptPer))
+        color <- higherBetter_colour(scaled)
+        value <- format(round(value, 2), nsmall = 2)
+        div(class = "stat-rating", style = list(background = color), value)
+      }
+    ),
+    
+    #Create the goal assists columns
+    #Total
+    goalAssistsTotal = colDef(
+      name = "Total",
+      defaultSortOrder = "desc",
+      maxWidth = 55,
+      align = "center",
+      class = "border-left",
+      headerStyle = list(fontWeight = 700),
+      format = colFormat(digits = 0)
+    ),
+    #Per
+    goalAssistsPer = colDef(
+      name = "Per 15",
+      defaultSortOrder = "desc",
+      maxWidth = 65,
+      align = "center",
+      headerStyle = list(fontWeight = 700),
+      cell = function(value) {
+        scaled <- (value - min(dataAttacking$goalAssistsPer)) / (max(dataAttacking$goalAssistsPer) - min(dataAttacking$goalAssistsPer))
+        color <- higherBetter_colour(scaled)
+        value <- format(round(value, 2), nsmall = 2)
+        div(class = "stat-rating", style = list(background = color), value)
+      }
+    ),
+    
+    #Create the turnovers columns
+    #Total
+    generalPlayTurnoversTotal = colDef(
+      name = "Total",
+      defaultSortOrder = "asc",
+      maxWidth = 55,
+      align = "center",
+      class = "border-left",
+      headerStyle = list(fontWeight = 700),
+      format = colFormat(digits = 0)
+    ),
+    #Per
+    generalPlayTurnoversPer = colDef(
+      name = "Per 15",
+      defaultSortOrder = "asc",
+      maxWidth = 65,
+      align = "center",
+      headerStyle = list(fontWeight = 700),
+      cell = function(value) {
+        scaled <- (value - min(dataAttacking$generalPlayTurnoversPer)) / (max(dataAttacking$generalPlayTurnoversPer) - min(dataAttacking$generalPlayTurnoversPer))
+        color <- lowerBetter_colour(scaled)
+        value <- format(round(value, 2), nsmall = 2)
+        div(class = "stat-rating", style = list(background = color), value)
+      }
+    ),
+    
+    #Create the intercepts columns
+    #Total
+    interceptPassThrownTotal = colDef(
+      name = "Total",
+      defaultSortOrder = "asc",
+      maxWidth = 55,
+      align = "center",
+      class = "border-left",
+      headerStyle = list(fontWeight = 700),
+      format = colFormat(digits = 0)
+    ),
+    #Per
+    interceptPassThrownPer = colDef(
+      name = "Per 15",
+      defaultSortOrder = "asc",
+      maxWidth = 65,
+      align = "center",
+      headerStyle = list(fontWeight = 700),
+      cell = function(value) {
+        scaled <- (value - min(dataAttacking$interceptPassThrownPer)) / (max(dataAttacking$interceptPassThrownPer) - min(dataAttacking$interceptPassThrownPer))
+        color <- lowerBetter_colour(scaled)
+        value <- format(round(value, 2), nsmall = 2)
+        div(class = "stat-rating", style = list(background = color), value)
+      }
+    )
+    
+  ), #end columns list
+  
+  #Set reactable options
+  showSortIcon = FALSE,
+  borderless = TRUE,
+  class = "stats-tbl"
+  
+) #end reactable
+
+#Set table options
+div(class = "playerStats",
+  div(class = "title",
+    h2("Suncorp Super Netball 2020: Player Metrics (Attacking)"),
+    "Player metrics for attacking categories in Suncorp Super Netball 2020. Within each table, both absolute totals and per 15 minute totals (i.e. metric total relative to 15 minutes played) are presented. Players must have been on-court a minimum of 15 minutes to be included. Team (e.g. 'Vixens') or player (e.g. 'Watson') names can be looked up using the search bars."
+  ),
+  attackingStats_tbl
+)
+
+```
+
+```{r defensiveTable, echo = FALSE}
+
+#Read in data
+dataDefensive <- read.csv("data/individualPlayerStats_Defensive.csv", stringsAsFactors = FALSE)
+
+#Drop the player ID column
+dataDefensive <- subset(dataDefensive, select = -c(playerId))
+
+#Reorder team and player name columns
+dataDefensive <- dataDefensive[, c(2, 1, 3, 8, 14, 7, 13, 5, 11, 6, 12, 4, 10, 9, 15)]
+
+#Create table
+defensiveStats_tbl <- reactable(
+  
+  #Set data
+  dataDefensive,
+  
+  #Set pagination
+  pagination = TRUE,
+  defaultPageSize = 20,
+  
+  #Set parameters
+  highlight = TRUE,
+  searchable = FALSE,
+
+  #Set the default sort column
+  defaultSorted = "playerName",
+  defaultSortOrder = "asc",
+  
+  #Set column groups
+  defaultColGroup = colGroup(headerClass = "group-header"),
+  columnGroups = list(
+    colGroup(name = "Gains", columns = c("gainTotal","gainPer")),
+    colGroup(name = "Deflections", columns = c("deflectionsTotal","deflectionsPer")),
+    colGroup(name = "Deflections w/ Gain", columns = c("deflectionWithGainTotal","deflectionWithGainPer")),
+    colGroup(name = "Deflections w/ No Gain", columns = c("deflectionWithNoGainTotal","deflectionWithNoGainPer")),
+    colGroup(name = "Contact Penalties", columns = c("contactPenaltiesTotal","contactPenaltiesPer")),
+    colGroup(name = "Obstruction Penalties", columns = c("obstructionPenaltiesTotal","obstructionPenaltiesPer"))
+  ),
+  
+  #Set default column parameters
+  defaultColDef = colDef(headerClass = "header", align = "left"),
+  
+  #Create a list of the columns
+  columns = list(
+    
+    #Create the team column
+    squadName = colDef(
+      name = "Team",
+      filterable = TRUE,
+      style = list(fontSize = "12px", fontWeight = "bold"),
+      headerStyle = list(fontWeight = 700),
+      cell = function(value) {
+        div(class = "team",
+            img(class = "logo", alt = paste(value, "logo"), src = sprintf("Images/%s.png", value))
+            #div(class = "team-name", value)
+            )
+      },
+      maxWidth = 60
+    ),
+    
+    #Create the player name column
+    playerName = colDef(
+      name = "Player",
+      defaultSortOrder = "asc",
+      align = "center",
+      maxWidth = 150,
+      filterable = TRUE,
+      class = "cell group",
+      headerStyle = list(fontWeight = 700),
+      style = list(fontSize = "14px"),
+      cell = function(value) {
+        div(class = "player-name", value)
+      },
+    ),
+    
+    #Create the duration played column
+    durationMins = colDef(
+      name = "Mins.",
+      defaultSortOrder = "desc",
+      maxWidth = 55,
+      align = "center",
+      class = "cell number",
+      headerStyle = list(fontWeight = 700),
+      format = colFormat(digits = 1)
+    ),
+    
+    #Create the gains columns
+    #Total
+    gainTotal = colDef(
+      name = "Total",
+      defaultSortOrder = "desc",
+      maxWidth = 55,
+      align = "center",
+      class = "border-left",
+      headerStyle = list(fontWeight = 700),
+      format = colFormat(digits = 0)
+    ),
+    #Per
+    gainPer = colDef(
+      name = "Per 15",
+      defaultSortOrder = "desc",
+      maxWidth = 65,
+      align = "center",
+      headerStyle = list(fontWeight = 700),
+      cell = function(value) {
+        scaled <- (value - min(dataDefensive$gainPer)) / (max(dataDefensive$gainPer) - min(dataDefensive$gainPer))
+        color <- higherBetter_colour(scaled)
+        value <- format(round(value, 2), nsmall = 2)
+        div(class = "stat-rating", style = list(background = color), value)
+      }
+    ),
+    
+    #Create the deflections columns
+    #Total
+    deflectionsTotal = colDef(
+      name = "Total",
+      defaultSortOrder = "desc",
+      maxWidth = 55,
+      align = "center",
+      class = "border-left",
+      headerStyle = list(fontWeight = 700),
+      format = colFormat(digits = 0)
+    ),
+    #Per
+    deflectionsPer = colDef(
+      name = "Per 15",
+      defaultSortOrder = "desc",
+      maxWidth = 65,
+      align = "center",
+      headerStyle = list(fontWeight = 700),
+      cell = function(value) {
+        scaled <- (value - min(dataDefensive$deflectionsPer)) / (max(dataDefensive$deflectionsPer) - min(dataDefensive$deflectionsPer))
+        color <- higherBetter_colour(scaled)
+        value <- format(round(value, 2), nsmall = 2)
+        div(class = "stat-rating", style = list(background = color), value)
+      }
+    ),
+    
+    #Create the deflections with gain columns
+    #Total
+    deflectionWithGainTotal = colDef(
+      name = "Total",
+      defaultSortOrder = "desc",
+      maxWidth = 55,
+      align = "center",
+      class = "border-left",
+      headerStyle = list(fontWeight = 700),
+      format = colFormat(digits = 0)
+    ),
+    #Per
+    deflectionWithGainPer = colDef(
+      name = "Per 15",
+      defaultSortOrder = "desc",
+      maxWidth = 65,
+      align = "center",
+      headerStyle = list(fontWeight = 700),
+      cell = function(value) {
+        scaled <- (value - min(dataDefensive$deflectionWithGainPer)) / (max(dataDefensive$deflectionWithGainPer) - min(dataDefensive$deflectionWithGainPer))
+        color <- higherBetter_colour(scaled)
+        value <- format(round(value, 2), nsmall = 2)
+        div(class = "stat-rating", style = list(background = color), value)
+      }
+    ),
+    
+    #Create the deflection with no gain columns
+    #Total
+    deflectionWithNoGainTotal = colDef(
+      name = "Total",
+      defaultSortOrder = "desc",
+      maxWidth = 55,
+      align = "center",
+      class = "border-left",
+      headerStyle = list(fontWeight = 700),
+      format = colFormat(digits = 0)
+    ),
+    #Per
+    deflectionWithNoGainPer = colDef(
+      name = "Per 15",
+      defaultSortOrder = "desc",
+      maxWidth = 65,
+      align = "center",
+      headerStyle = list(fontWeight = 700),
+      cell = function(value) {
+        scaled <- (value - min(dataDefensive$deflectionWithNoGainPer)) / (max(dataDefensive$deflectionWithNoGainPer) - min(dataDefensive$deflectionWithNoGainPer))
+        color <- higherBetter_colour(scaled)
+        value <- format(round(value, 2), nsmall = 2)
+        div(class = "stat-rating", style = list(background = color), value)
+      }
+    ),
+    
+    #Create the contact columns
+    #Total
+    contactPenaltiesTotal = colDef(
+      name = "Total",
+      defaultSortOrder = "asc",
+      maxWidth = 55,
+      align = "center",
+      class = "border-left",
+      headerStyle = list(fontWeight = 700),
+      format = colFormat(digits = 0)
+    ),
+    #Per
+    contactPenaltiesPer = colDef(
+      name = "Per 15",
+      defaultSortOrder = "asc",
+      maxWidth = 65,
+      align = "center",
+      headerStyle = list(fontWeight = 700),
+      cell = function(value) {
+        scaled <- (value - min(dataDefensive$contactPenaltiesPer)) / (max(dataDefensive$contactPenaltiesPer) - min(dataDefensive$contactPenaltiesPer))
+        color <- lowerBetter_colour(scaled)
+        value <- format(round(value, 2), nsmall = 2)
+        div(class = "stat-rating", style = list(background = color), value)
+      }
+    ),
+    
+    #Create the obstruction columns
+    #Total
+    obstructionPenaltiesTotal = colDef(
+      name = "Total",
+      defaultSortOrder = "asc",
+      maxWidth = 55,
+      align = "center",
+      class = "border-left",
+      headerStyle = list(fontWeight = 700),
+      format = colFormat(digits = 0)
+    ),
+    #Per
+    obstructionPenaltiesPer = colDef(
+      name = "Per 15",
+      defaultSortOrder = "asc",
+      maxWidth = 65,
+      align = "center",
+      headerStyle = list(fontWeight = 700),
+      cell = function(value) {
+        scaled <- (value - min(dataDefensive$obstructionPenaltiesPer)) / (max(dataDefensive$obstructionPenaltiesPer) - min(dataDefensive$obstructionPenaltiesPer))
+        color <- lowerBetter_colour(scaled)
+        value <- format(round(value, 2), nsmall = 2)
+        div(class = "stat-rating", style = list(background = color), value)
+      }
+    )
+    
+  ), #end columns list
+  
+  #Set reactable options
+  showSortIcon = FALSE,
+  borderless = TRUE,
+  class = "stats-tbl"
+  
+) #end reactable
+
+#Set table options
+div(class = "playerStats",
+  div(class = "title",
+    h2("Suncorp Super Netball 2020: Player Metrics (Defensive)"),
+    "Player metrics for defensive categories in Suncorp Super Netball 2020. Within each table, both absolute totals and per 15 minute totals (i.e. metric total relative to 15 minutes played) are presented. Players must have been on-court a minimum of 15 minutes to be included. Team (e.g. 'Vixens') or player (e.g. 'Watson') names can be looked up using the search bars."
+  ),
+  defensiveStats_tbl
+)
+
+```
+
+---
+
+Data through 10 rounds of Super Netball 2020. Source: [Champion Data Match Centre](https://mc.championdata.com/super_netball/)
+
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+
+```{r ref.label="table", eval=FALSE}
+```
+
+```{r}
+tags$link(href = "https://fonts.googleapis.com/css?family=Karla:400,700|Fira+Mono&display=fallback", rel = "stylesheet")
+```
+
+```{css}
+
+/* Whole document: */
+body{
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12pt;
+}
+/* Headers */
+h1{
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.author,.date{
+    display: none;
+}
+
+.playerStats {
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+}
+
+.title {
+  margin: 18px 0;
+  font-size: 16px;
+}
+
+.title h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+# .plusMinus-table {
+#   margin-bottom: 20px;
+# }
+
+/* Align header text to the bottom */
+.header,
+.group-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.header {
+  border-bottom-color: #555;
+  font-size: 13px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+/* Highlight headers when sorting */
+.header:hover,
+.header[aria-sort="ascending"],
+.header[aria-sort="descending"] {
+  background-color: #eee;
+}
+
+.number {
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.border-left {
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  border-left: 0.5px solid #d9d9d9;
+}
+
+.team {
+  display: flex;
+  align-items: right;
+}
+
+.team-name {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.player-name {
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.logo {
+  margin-right: 8px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  height: 30px;
+}
+
+.stat-rating {
+  display: inline-block;
+  padding: 2px 12px;
+  border-radius: 15px;
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+```
+
+```{css echo=FALSE}
+/* rmarkdown html documents */
+.main-container {
+  max-width: 1054px !important;
+}
+
+h1.title {
+  display: none;
+}
+
+/* pkgdown articles */
+.contents {
+  width: 1054px;
+}
+
+.page-header {
+  display: none;
+}
+```
