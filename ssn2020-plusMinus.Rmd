@@ -522,7 +522,7 @@ player_plusMinus_tbl <- reactable(
 div(class = "lineUp-plusMinus",
   div(class = "title",
     h2("Suncorp Super Netball 2020: Player +/- Peformance"),
-    "Score differentials when different players are on vs. off the court in SuncorpSuper Netball 2020. Data are presented as absolute score differential (abs.), as well as score differential per 15 minutes player (per.). The relative differential (diff.) for when the player is on vs. off the court are also presented. Players must have played a minimum of 15 minutes and spent a minimum of 10 minutes off the court to be included. Player (e.g. 'Watson') names can be looked up using the search bar."
+    "Score differentials when different players are on vs. off the court in SuncorpSuper Netball 2020. Data are presented as absolute score differential (abs.), as well as score differential per 15 minutes player (per.). The relative differential (diff.) for when the player is on vs. off the court are also presented. Players must have played a minimum of 15 minutes and spent a minimum of 15 minutes off the court to be included. Player (e.g. 'Watson') names can be looked up using the search bar."
   ),
   player_plusMinus_tbl
 )
@@ -531,7 +531,7 @@ div(class = "lineUp-plusMinus",
 
 ---
 
-Data through 11 rounds of Super Netball 2020. Source: [Champion Data Match Centre](https://mc.championdata.com/super_netball/)
+Data through 12 rounds of Super Netball 2020. Source: [Champion Data Match Centre](https://mc.championdata.com/super_netball/)
 
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
 
