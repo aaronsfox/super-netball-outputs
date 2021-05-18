@@ -359,7 +359,7 @@ attackingStats_tbl <- reactable(
 div(class = "playerStats",
   div(class = "title",
     h2("Suncorp Super Netball 2021: Player Metrics (Attacking)"),
-    "Player metrics for attacking categories in Suncorp Super Netball 2021. Within each table, both absolute totals and per 15 minute totals (i.e. metric total relative to 15 minutes played) are presented. Players must have been on-court a minimum of 15 minutes to be included. Team (e.g. 'Vixens') or player (e.g. 'Watson') names can be looked up using the search bars."
+    "Player metrics for attacking categories in Suncorp Super Netball 2021. Within each table, both absolute totals and per 15 minute totals (i.e. metric total relative to 15 minutes played) are presented. Players must have been on-court a minimum of 15 minutes to be included. Team (e.g. 'Vixens') or player (e.g. 'Moloney') names can be looked up using the search bars."
   ),
   attackingStats_tbl
 )
@@ -622,7 +622,7 @@ defensiveStats_tbl <- reactable(
 div(class = "playerStats",
   div(class = "title",
     h2("Suncorp Super Netball 2021: Player Metrics (Defensive)"),
-    "Player metrics for defensive categories in Suncorp Super Netball 2021. Within each table, both absolute totals and per 15 minute totals (i.e. metric total relative to 15 minutes played) are presented. Players must have been on-court a minimum of 15 minutes to be included. Team (e.g. 'Vixens') or player (e.g. 'Watson') names can be looked up using the search bars."
+    "Player metrics for defensive categories in Suncorp Super Netball 2021. Within each table, both absolute totals and per 15 minute totals (i.e. metric total relative to 15 minutes played) are presented. Players must have been on-court a minimum of 15 minutes to be included. Team (e.g. 'Vixens') or player (e.g. 'Moloney') names can be looked up using the search bars."
   ),
   defensiveStats_tbl
 )

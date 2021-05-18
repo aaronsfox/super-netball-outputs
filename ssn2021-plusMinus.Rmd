@@ -1,7 +1,7 @@
 ---
-title: "Plus/Minus Data for Super Netball 2020 Team Line-Ups"
+title: "Plus/Minus Data for Super Netball 2021 Team Line-Ups"
 author: "Aaron Fox"
-date: "20/08/2020"
+date: "18/05/2021"
 output: html_document
 ---
 
@@ -14,7 +14,7 @@ output: html_document
 knitr::opts_chunk$set(echo = FALSE, cache = TRUE)
 ```
 
-# Suncorp Super Netball 2020: Plus/Minus Analysis
+# Suncorp Super Netball 2021: Plus/Minus Analysis
 
 ![](Images/csr-deakin.png)
 
@@ -35,7 +35,7 @@ library(reactable)
 library(htmltools)
 
 #Read in data
-data <- read.csv("data/season2020/teamLineUps_plusMinus.csv", stringsAsFactors = FALSE)
+data <- read.csv("data/season2021/teamLineUps_plusMinus.csv", stringsAsFactors = FALSE)
 
 #Create function for colour mapping
 make_color_pal <- function(colors, bias = 1) {
@@ -274,8 +274,8 @@ lineUp_plusMinus_tbl <- reactable(
 #Set table options
 div(class = "lineUp-plusMinus",
   div(class = "title",
-    h2("Suncorp Super Netball 2020: Line-Up +/- Peformance"),
-    "Score differentials across different line-ups used by teams in Suncorp Super Netball 2020. Data are presented as absolute score differential (abs.), as well as score differential per 15 minutes player (per.). Line-ups must have played a minimum of 15 minutes together to be included. Team (e.g. 'Vixens') or player (e.g. 'Watson') names (including a combination of these) can be looked up using the search bars."
+    h2("Suncorp Super Netball 2021: Line-Up +/- Peformance"),
+    "Score differentials across different line-ups used by teams in Suncorp Super Netball 2021. Data are presented as absolute score differential (abs.), as well as score differential per 15 minutes player (per.). Line-ups must have played a minimum of 15 minutes together to be included. Team (e.g. 'Vixens') or player (e.g. 'Moloney') names (including a combination of these) can be looked up using the search bars."
   ),
   lineUp_plusMinus_tbl
 )
@@ -287,7 +287,7 @@ div(class = "lineUp-plusMinus",
 #Individual player table
 
 #Read in data
-dataPlayer <- read.csv("data/season2020/individualPlayer_plusMinus.csv", stringsAsFactors = FALSE)
+dataPlayer <- read.csv("data/season2021/individualPlayer_plusMinus.csv", stringsAsFactors = FALSE)
 
 #Create table
 player_plusMinus_tbl <- reactable(
@@ -521,8 +521,8 @@ player_plusMinus_tbl <- reactable(
 #Set table options
 div(class = "lineUp-plusMinus",
   div(class = "title",
-    h2("Suncorp Super Netball 2020: Player +/- Peformance"),
-    "Score differentials when different players are on vs. off the court in SuncorpSuper Netball 2020. Data are presented as absolute score differential (abs.), as well as score differential per 15 minutes player (per.). The relative differential (diff.) for when the player is on vs. off the court are also presented. Players must have played a minimum of 15 minutes and spent a minimum of 15 minutes off the court to be included. Player (e.g. 'Watson') names can be looked up using the search bar."
+    h2("Suncorp Super Netball 2021: Player +/- Peformance"),
+    "Score differentials when different players are on vs. off the court in SuncorpSuper Netball 2021. Data are presented as absolute score differential (abs.), as well as score differential per 15 minutes player (per.). The relative differential (diff.) for when the player is on vs. off the court are also presented. Players must have played a minimum of 15 minutes and spent a minimum of 15 minutes off the court to be included. Player (e.g. 'Moloney') names can be looked up using the search bar."
   ),
   player_plusMinus_tbl
 )
@@ -531,7 +531,7 @@ div(class = "lineUp-plusMinus",
 
 ---
 
-Data through 14 rounds of Super Netball 2020. Source: [Champion Data Match Centre](https://mc.championdata.com/super_netball/)
+Data through 3 rounds of Super Netball 2021. Source: [Champion Data Match Centre](https://mc.championdata.com/super_netball/)
 
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
 

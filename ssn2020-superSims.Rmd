@@ -9,7 +9,7 @@ output: html_document
 
 #Set the libPath to the conda environment
 #Run this to reset the library paths
-###.libPaths("C:/Users/aafox/Appdata/season2020/Local/Continuum/anaconda3/envs/super_netball_analysis_r/Lib/R/library")
+###.libPaths("C:/Users/aafox/AppData/Local/Continuum/anaconda3/envs/super_netball_analysis_r/Lib/R/library")
 
 knitr::opts_chunk$set(echo = FALSE, cache = TRUE)
 ```
