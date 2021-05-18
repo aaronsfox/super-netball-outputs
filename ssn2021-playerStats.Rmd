@@ -1,7 +1,7 @@
 ---
-title: "Player Stats Data for Super Netball 2020"
+title: "Player Stats Data for Super Netball 2021"
 author: "Aaron Fox"
-date: "07/09/2020"
+date: "18/05/2021"
 output: html_document
 ---
 
@@ -15,13 +15,13 @@ library(htmltools)
 
 ```
 
-# Suncorp Super Netball 2020: Player Metrics
+# Suncorp Super Netball 2021: Player Metrics
 
 ![](Images/csr-deakin.png)
 
 **Performance insights by Deakin's Centre for Sport Research. Please feel free to contact the author of this work, Aaron Fox ([aaron.f@deakin.edu.au](mailto:aaron.f@deakin.edu.au)), if you have any questions about the analyses.**
 
-The following tables provide summary metrics for players from Suncorp Super Netball 2020. Metrics are split into loose *attacking* and *defensive* categories.
+The following tables provide summary metrics for players from Suncorp Super Netball 2021. Metrics are split into loose *attacking* and *defensive* categories.
 
 Attacking metrics include:
 
@@ -44,7 +44,7 @@ Defensive metrics include:
 ```{r attackingTable, echo = FALSE}
 
 #Read in data
-dataAttacking <- read.csv("data/season2020/individualPlayerStats_Attacking.csv", stringsAsFactors = FALSE)
+dataAttacking <- read.csv("data/season2021/individualPlayerStats_Attacking.csv", stringsAsFactors = FALSE)
 
 #Drop the player ID column
 dataAttacking <- subset(dataAttacking, select = -c(playerId))
@@ -358,8 +358,8 @@ attackingStats_tbl <- reactable(
 #Set table options
 div(class = "playerStats",
   div(class = "title",
-    h2("Suncorp Super Netball 2020: Player Metrics (Attacking)"),
-    "Player metrics for attacking categories in Suncorp Super Netball 2020. Within each table, both absolute totals and per 15 minute totals (i.e. metric total relative to 15 minutes played) are presented. Players must have been on-court a minimum of 15 minutes to be included. Team (e.g. 'Vixens') or player (e.g. 'Watson') names can be looked up using the search bars."
+    h2("Suncorp Super Netball 2021: Player Metrics (Attacking)"),
+    "Player metrics for attacking categories in Suncorp Super Netball 2021. Within each table, both absolute totals and per 15 minute totals (i.e. metric total relative to 15 minutes played) are presented. Players must have been on-court a minimum of 15 minutes to be included. Team (e.g. 'Vixens') or player (e.g. 'Watson') names can be looked up using the search bars."
   ),
   attackingStats_tbl
 )
@@ -369,7 +369,7 @@ div(class = "playerStats",
 ```{r defensiveTable, echo = FALSE}
 
 #Read in data
-dataDefensive <- read.csv("data/season2020/individualPlayerStats_Defensive.csv", stringsAsFactors = FALSE)
+dataDefensive <- read.csv("data/season2021/individualPlayerStats_Defensive.csv", stringsAsFactors = FALSE)
 
 #Drop the player ID column
 dataDefensive <- subset(dataDefensive, select = -c(playerId))
@@ -621,8 +621,8 @@ defensiveStats_tbl <- reactable(
 #Set table options
 div(class = "playerStats",
   div(class = "title",
-    h2("Suncorp Super Netball 2020: Player Metrics (Defensive)"),
-    "Player metrics for defensive categories in Suncorp Super Netball 2020. Within each table, both absolute totals and per 15 minute totals (i.e. metric total relative to 15 minutes played) are presented. Players must have been on-court a minimum of 15 minutes to be included. Team (e.g. 'Vixens') or player (e.g. 'Watson') names can be looked up using the search bars."
+    h2("Suncorp Super Netball 2021: Player Metrics (Defensive)"),
+    "Player metrics for defensive categories in Suncorp Super Netball 2021. Within each table, both absolute totals and per 15 minute totals (i.e. metric total relative to 15 minutes played) are presented. Players must have been on-court a minimum of 15 minutes to be included. Team (e.g. 'Vixens') or player (e.g. 'Watson') names can be looked up using the search bars."
   ),
   defensiveStats_tbl
 )
@@ -631,7 +631,7 @@ div(class = "playerStats",
 
 ---
 
-Data through 14 rounds of Super Netball 2020. Source: [Champion Data Match Centre](https://mc.championdata.com/super_netball/)
+Data through 3 rounds of Super Netball 2021. Source: [Champion Data Match Centre](https://mc.championdata.com/super_netball/)
 
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
 

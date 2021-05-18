@@ -9,7 +9,7 @@ output: html_document
 
 #Set the libPath to the conda environment
 #Run this to reset the library paths
-###.libPaths("C:/Users/aafox/AppData/Local/Continuum/anaconda3/envs/super_netball_analysis_r/Lib/R/library")
+###.libPaths("C:/Users/aafox/Appdata/season2020/Local/Continuum/anaconda3/envs/super_netball_analysis_r/Lib/R/library")
 
 knitr::opts_chunk$set(echo = FALSE, cache = TRUE)
 ```
@@ -35,7 +35,7 @@ library(reactable)
 library(htmltools)
 
 #Read in data
-data <- read.csv("data/teamLineUps_plusMinus.csv", stringsAsFactors = FALSE)
+data <- read.csv("data/season2020/teamLineUps_plusMinus.csv", stringsAsFactors = FALSE)
 
 #Create function for colour mapping
 make_color_pal <- function(colors, bias = 1) {
@@ -287,7 +287,7 @@ div(class = "lineUp-plusMinus",
 #Individual player table
 
 #Read in data
-dataPlayer <- read.csv("data/individualPlayer_plusMinus.csv", stringsAsFactors = FALSE)
+dataPlayer <- read.csv("data/season2020/individualPlayer_plusMinus.csv", stringsAsFactors = FALSE)
 
 #Create table
 player_plusMinus_tbl <- reactable(
