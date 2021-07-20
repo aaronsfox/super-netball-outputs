@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Aaron Fox" />
+
+
+<title>The People’s Diamonds</title>
+
+<script src="site_libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/core-js-2.5.3/shim.min.js"></script>
+<script src="site_libs/react-16.12.0/react.min.js"></script>
+<script src="site_libs/react-16.12.0/react-dom.min.js"></script>
+<script src="site_libs/reactwidget-1.0.0/react-tools.js"></script>
+<script src="site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="site_libs/reactable-binding-0.2.1/reactable.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">The People’s Diamonds</h1>
+<h4 class="author">Aaron Fox</h4>
+<h4 class="date">19/07/2021</h4>
+
+</div>
+
+
+<div id="the-peoples-diamonds" class="section level1">
+<h1>The People’s Diamonds</h1>
+<p><strong>Please feel free to contact the authors of this work, <a href="https://twitter.com/alicesweeting">Alice Sweeting</a> and <a href="https://twitter.com/aaron_s_fox">Aaron Fox</a> on Twitter, if you have any questions about the data.</strong></p>
+<p>Selecting the national Diamonds team is a difficult and unenviable task at any time, so why not outsource (<em>DISCLAIMER: just so everyone’s clear, there was no actual outsourcing…</em>) to those who know the game best (well according to them at least…) — the fans! These date are taken from <a href="bit.ly/AusDiamonds12">Alice Sweeting’s Poll</a> for who ‘the people’ would like to see suiting up for Australia in late 2021.</p>
+<div id="team-selection" class="section level2">
+<h2>Team Selection</h2>
+<p>Identifying a consensus line-up based on voting is a potentially complex tasks. There are a couple of different ways we could go about doing this. The approach we’ll take here is to look at the most commonly selected player at each position, and consider this to be the consensus starting line-up. If there is a player who has received the most votes across multiple positions, we’ll slot them into their highest voted position.</p>
+<div class="lineup-votes">
+<div class="lineup-header">
+<div class="lineup-title">Consensus Starting Line-Up</div>
+</div>
+<div id="htmlwidget-41b20d9dcfe8dcd4eaae" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-41b20d9dcfe8dcd4eaae">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"position":["GK","GD","WD","C","WA","GA","GS"],"player":["Courtney Bruce","Jo Weston","Amy Parmenter","Kim Ravaillion","Paige Hadley","Gretel Bueta","Cara Koenen"],"per":[0.552486187845304,0.38121546961326,0.513812154696133,0.49171270718232,0.298342541436464,0.580110497237569,0.834254143646409]},"columns":[{"accessor":"position","name":"Position","type":"character","align":"center","headerClassName":"header","filterable":false,"cell":[{"name":"div","attribs":{"className":"pos-name"},"children":["GK"]},{"name":"div","attribs":{"className":"pos-name"},"children":["GD"]},{"name":"div","attribs":{"className":"pos-name"},"children":["WD"]},{"name":"div","attribs":{"className":"pos-name"},"children":["C"]},{"name":"div","attribs":{"className":"pos-name"},"children":["WA"]},{"name":"div","attribs":{"className":"pos-name"},"children":["GA"]},{"name":"div","attribs":{"className":"pos-name"},"children":["GS"]}],"maxWidth":150,"className":"cell group","style":{"color":"#04897a","fontSize":"14px"},"headerStyle":{"fontWeight":1000}},{"accessor":"player","name":"Player","type":"character","align":"left","headerClassName":"header","filterable":false,"defaultSortDesc":false,"cell":[{"name":"div","attribs":{"className":"player-name"},"children":["Courtney Bruce"]},{"name":"div","attribs":{"className":"player-name"},"children":["Jo Weston"]},{"name":"div","attribs":{"className":"player-name"},"children":["Amy Parmenter"]},{"name":"div","attribs":{"className":"player-name"},"children":["Kim Ravaillion"]},{"name":"div","attribs":{"className":"player-name"},"children":["Paige Hadley"]},{"name":"div","attribs":{"className":"player-name"},"children":["Gretel Bueta"]},{"name":"div","attribs":{"className":"player-name"},"children":["Cara Koenen"]}],"maxWidth":300,"className":"cell group","style":{"fontSize":"14px"},"headerStyle":{"fontWeight":700}},{"accessor":"per","name":"Percentage of Selections","type":"numeric","align":"left","headerClassName":"header","defaultSortDesc":true,"cell":"function(cellInfo) {\n        // Format as percentage\n        const pct = (cellInfo.value * 100).toFixed(1) + '%'\n        // Pad single-digit numbers\n        let value = pct.padStart(5)\n        // Render bar chart\n        return (\n          '<div class=\"bar-cell\">' +\n            '<span class=\"number\">' + value + '<\/span>' +\n            '<div class=\"bar-chart\" style=\"background-color: #e1e1e1\">' +\n              '<div class=\"bar\" style=\"width: ' + pct + '; background-color: #04897a\"><\/div>' +\n            '<\/div>' +\n          '<\/div>'\n        )\n      }","html":true}],"sortable":false,"defaultPageSize":7,"paginationType":"numbers","showPageInfo":true,"minRows":1,"highlight":true,"compact":true,"className":"lineup-tbl","dataKey":"c9b571926b797f828bdd4c7a47375b83","key":"c9b571926b797f828bdd4c7a47375b83"},"children":[]},"class":"reactR_markup"},"evals":["tag.attribs.columns.2.cell"],"jsHooks":[]}</script>
+</div>
+<p>After identifying our starting line-up we need to fill out the five bench spots. Playing positions and combinations would typically be taken into consideration, however given the variation across the individually selected line-ups, for us it makes more sense to focus on the remaining most selected players outside of the starting line-up. Essentially these players represent the next ‘most selected’ and proposed next most talented players.</p>
+<div class="lineup-votes">
+<div class="lineup-header">
+<div class="lineup-title">Consensus Diamonds Team</div>
+</div>
+<div id="htmlwidget-4b4ca6ab0da746cf78b1" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-4b4ca6ab0da746cf78b1">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"position":["GK","GD","WD","C","WA","GA","GS","Bench","Bench","Bench","Bench","Bench"],"player":["Courtney Bruce","Jo Weston","Amy Parmenter","Kim Ravaillion","Paige Hadley","Gretel Bueta","Cara Koenen","Sarah Klau","Steph Wood","Jamie-Lee Price","Ash Brazill","Kelsey Browne"]},"columns":[{"accessor":"position","name":"Position","type":"character","align":"center","headerClassName":"header","filterable":false,"cell":[{"name":"div","attribs":{"className":"pos-name"},"children":["GK"]},{"name":"div","attribs":{"className":"pos-name"},"children":["GD"]},{"name":"div","attribs":{"className":"pos-name"},"children":["WD"]},{"name":"div","attribs":{"className":"pos-name"},"children":["C"]},{"name":"div","attribs":{"className":"pos-name"},"children":["WA"]},{"name":"div","attribs":{"className":"pos-name"},"children":["GA"]},{"name":"div","attribs":{"className":"pos-name"},"children":["GS"]},{"name":"div","attribs":{"className":"pos-name"},"children":["Bench"]},{"name":"div","attribs":{"className":"pos-name"},"children":["Bench"]},{"name":"div","attribs":{"className":"pos-name"},"children":["Bench"]},{"name":"div","attribs":{"className":"pos-name"},"children":["Bench"]},{"name":"div","attribs":{"className":"pos-name"},"children":["Bench"]}],"maxWidth":150,"className":"cell group","style":{"color":"#04897a","fontSize":"14px"},"headerStyle":{"fontWeight":1000}},{"accessor":"player","name":"Player","type":"character","align":"center","headerClassName":"header","filterable":false,"defaultSortDesc":false,"cell":[{"name":"div","attribs":{"className":"player-name"},"children":["Courtney Bruce"]},{"name":"div","attribs":{"className":"player-name"},"children":["Jo Weston"]},{"name":"div","attribs":{"className":"player-name"},"children":["Amy Parmenter"]},{"name":"div","attribs":{"className":"player-name"},"children":["Kim Ravaillion"]},{"name":"div","attribs":{"className":"player-name"},"children":["Paige Hadley"]},{"name":"div","attribs":{"className":"player-name"},"children":["Gretel Bueta"]},{"name":"div","attribs":{"className":"player-name"},"children":["Cara Koenen"]},{"name":"div","attribs":{"className":"player-name"},"children":["Sarah Klau"]},{"name":"div","attribs":{"className":"player-name"},"children":["Steph Wood"]},{"name":"div","attribs":{"className":"player-name"},"children":["Jamie-Lee Price"]},{"name":"div","attribs":{"className":"player-name"},"children":["Ash Brazill"]},{"name":"div","attribs":{"className":"player-name"},"children":["Kelsey Browne"]}],"maxWidth":300,"className":"cell group","style":{"fontSize":"14px"},"headerStyle":{"fontWeight":700}}],"sortable":false,"defaultPageSize":12,"paginationType":"numbers","showPageInfo":true,"minRows":1,"highlight":true,"compact":true,"className":"lineup-tbl","dataKey":"b63896ef3822d686f20bc7e9693e5bcc","key":"b63896ef3822d686f20bc7e9693e5bcc"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div id="most-selected-players" class="section level2">
+<h2>Most Selected Players</h2>
+<p>The consensus line-up and team approaches above consider how people have structured their teams around positional selections. Another potential idea for selecting the consensus team is to examine which players have been the most selected irrespective of the starting versus bench positions — and attempt to build line-up combinations from these most selected players. Looking at this data also provides an opportunity to see which players are on the edge of ‘selection’ or who the up-and-coming players potentially nearing selection are.</p>
+<div class="tbl-votes">
+<div class="votes-header">
+<div class="votes-title">Summary of All Selected Players</div>
+</div>
+<div id="htmlwidget-5e89b6a1673481d85890" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-5e89b6a1673481d85890">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"player":["Courtney Bruce","Cara Koenen","Gretel Bueta","Sarah Klau","Steph Wood","Jo Weston","Jamie-Lee Price","Kim Ravaillion","Amy Parmenter","Paige Hadley","Ash Brazill","Kelsey Browne","Sophie Garbin","April Brandley","Caitlin Bassett","Kate Moloney","Maddy Proud","Sunday Aryang","Kim Jenner","Sophie Dwyer","Maddy Turner","Liz Watson","Gabi Simpson","Maddie Hay","Donnell Wallam","Verity Charles","Tara Hinchliffe","Maddy Mcauliffe","Jess Anstiss","Mahalia Cassidy","Laura Scherian","Kate Eddy","Tippah Dwan","Emily Mannix","Georgie Horjus","Kiera Austin","Jemma Mi Mi","Sasha Glasgow","Sam Poolman","Lara Dunkley","Hannah Petty","Alice Teague-Neeld","Gabrielle Sinclair","Matisse Letherbarrow","Matilda Garrett","Tayla Fraser"],"n":[179,173,166,160,152,149,115,115,112,101,82,79,64,61,60,59,57,44,34,31,26,24,22,21,21,15,6,5,5,4,4,4,3,3,2,2,2,2,1,1,1,1,1,1,1,1],"per":[0.988950276243094,0.955801104972376,0.917127071823204,0.883977900552486,0.839779005524862,0.823204419889503,0.635359116022099,0.635359116022099,0.61878453038674,0.558011049723757,0.453038674033149,0.43646408839779,0.353591160220994,0.337016574585635,0.331491712707182,0.325966850828729,0.314917127071823,0.243093922651934,0.187845303867403,0.171270718232044,0.143646408839779,0.132596685082873,0.121546961325967,0.116022099447514,0.116022099447514,0.0828729281767956,0.0331491712707182,0.0276243093922652,0.0276243093922652,0.0220994475138122,0.0220994475138122,0.0220994475138122,0.0165745856353591,0.0165745856353591,0.0110497237569061,0.0110497237569061,0.0110497237569061,0.0110497237569061,0.00552486187845304,0.00552486187845304,0.00552486187845304,0.00552486187845304,0.00552486187845304,0.00552486187845304,0.00552486187845304,0.00552486187845304]},"columns":[{"accessor":"player","name":"Player","type":"character","align":"left","headerClassName":"header","filterable":false,"defaultSortDesc":false,"cell":[{"name":"div","attribs":{"className":"player-name"},"children":["Courtney Bruce"]},{"name":"div","attribs":{"className":"player-name"},"children":["Cara Koenen"]},{"name":"div","attribs":{"className":"player-name"},"children":["Gretel Bueta"]},{"name":"div","attribs":{"className":"player-name"},"children":["Sarah Klau"]},{"name":"div","attribs":{"className":"player-name"},"children":["Steph Wood"]},{"name":"div","attribs":{"className":"player-name"},"children":["Jo Weston"]},{"name":"div","attribs":{"className":"player-name"},"children":["Jamie-Lee Price"]},{"name":"div","attribs":{"className":"player-name"},"children":["Kim Ravaillion"]},{"name":"div","attribs":{"className":"player-name"},"children":["Amy Parmenter"]},{"name":"div","attribs":{"className":"player-name"},"children":["Paige Hadley"]},{"name":"div","attribs":{"className":"player-name"},"children":["Ash Brazill"]},{"name":"div","attribs":{"className":"player-name"},"children":["Kelsey Browne"]},{"name":"div","attribs":{"className":"player-name"},"children":["Sophie Garbin"]},{"name":"div","attribs":{"className":"player-name"},"children":["April Brandley"]},{"name":"div","attribs":{"className":"player-name"},"children":["Caitlin Bassett"]},{"name":"div","attribs":{"className":"player-name"},"children":["Kate Moloney"]},{"name":"div","attribs":{"className":"player-name"},"children":["Maddy Proud"]},{"name":"div","attribs":{"className":"player-name"},"children":["Sunday Aryang"]},{"name":"div","attribs":{"className":"player-name"},"children":["Kim Jenner"]},{"name":"div","attribs":{"className":"player-name"},"children":["Sophie Dwyer"]},{"name":"div","attribs":{"className":"player-name"},"children":["Maddy Turner"]},{"name":"div","attribs":{"className":"player-name"},"children":["Liz Watson"]},{"name":"div","attribs":{"className":"player-name"},"children":["Gabi Simpson"]},{"name":"div","attribs":{"className":"player-name"},"children":["Maddie Hay"]},{"name":"div","attribs":{"className":"player-name"},"children":["Donnell Wallam"]},{"name":"div","attribs":{"className":"player-name"},"children":["Verity Charles"]},{"name":"div","attribs":{"className":"player-name"},"children":["Tara Hinchliffe"]},{"name":"div","attribs":{"className":"player-name"},"children":["Maddy Mcauliffe"]},{"name":"div","attribs":{"className":"player-name"},"children":["Jess Anstiss"]},{"name":"div","attribs":{"className":"player-name"},"children":["Mahalia Cassidy"]},{"name":"div","attribs":{"className":"player-name"},"children":["Laura Scherian"]},{"name":"div","attribs":{"className":"player-name"},"children":["Kate Eddy"]},{"name":"div","attribs":{"className":"player-name"},"children":["Tippah Dwan"]},{"name":"div","attribs":{"className":"player-name"},"children":["Emily Mannix"]},{"name":"div","attribs":{"className":"player-name"},"children":["Georgie Horjus"]},{"name":"div","attribs":{"className":"player-name"},"children":["Kiera Austin"]},{"name":"div","attribs":{"className":"player-name"},"children":["Jemma Mi Mi"]},{"name":"div","attribs":{"className":"player-name"},"children":["Sasha Glasgow"]},{"name":"div","attribs":{"className":"player-name"},"children":["Sam Poolman"]},{"name":"div","attribs":{"className":"player-name"},"children":["Lara Dunkley"]},{"name":"div","attribs":{"className":"player-name"},"children":["Hannah Petty"]},{"name":"div","attribs":{"className":"player-name"},"children":["Alice Teague-Neeld"]},{"name":"div","attribs":{"className":"player-name"},"children":["Gabrielle Sinclair"]},{"name":"div","attribs":{"className":"player-name"},"children":["Matisse Letherbarrow"]},{"name":"div","attribs":{"className":"player-name"},"children":["Matilda Garrett"]},{"name":"div","attribs":{"className":"player-name"},"children":["Tayla Fraser"]}],"maxWidth":300,"className":"cell group","style":{"fontSize":"14px"},"headerStyle":{"fontWeight":700}},{"accessor":"n","name":"No. of Selections","type":"numeric","align":"left","headerClassName":"header","defaultSortDesc":true,"cell":[{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["      179"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"100%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["      173"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"96.6480446927374%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["      166"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"92.7374301675978%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["      160"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"89.3854748603352%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["      152"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"84.9162011173184%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["      149"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"83.2402234636871%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["      115"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"64.2458100558659%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["      115"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"64.2458100558659%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["      112"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"62.5698324022346%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["      101"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"56.4245810055866%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       82"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"45.8100558659218%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       79"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"44.1340782122905%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       64"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"35.7541899441341%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       61"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"34.0782122905028%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       60"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"33.5195530726257%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       59"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"32.9608938547486%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       57"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"31.8435754189944%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       44"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"24.5810055865922%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       34"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"18.9944134078212%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       31"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"17.3184357541899%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       26"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"14.5251396648045%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       24"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"13.4078212290503%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       22"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"12.2905027932961%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       21"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"11.731843575419%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       21"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"11.731843575419%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       15"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"8.37988826815642%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        6"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"3.35195530726257%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        5"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"2.79329608938547%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        5"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"2.79329608938547%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        4"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"2.23463687150838%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        4"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"2.23463687150838%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        4"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"2.23463687150838%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        3"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"1.67597765363128%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        3"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"1.67597765363128%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        2"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"1.11731843575419%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        2"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"1.11731843575419%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        2"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"1.11731843575419%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        2"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"1.11731843575419%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        1"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"0.558659217877095%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        1"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"0.558659217877095%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        1"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"0.558659217877095%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        1"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"0.558659217877095%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        1"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"0.558659217877095%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        1"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"0.558659217877095%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        1"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"0.558659217877095%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        1"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"0.558659217877095%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]}]},{"accessor":"per","name":"Percentage of Selections","type":"numeric","align":"left","headerClassName":"header","defaultSortDesc":true,"cell":"function(cellInfo) {\n        // Format as percentage\n        const pct = (cellInfo.value * 100).toFixed(1) + '%'\n        // Pad single-digit numbers\n        let value = pct.padStart(5)\n        // Render bar chart\n        return (\n          '<div class=\"bar-cell\">' +\n            '<span class=\"number\">' + value + '<\/span>' +\n            '<div class=\"bar-chart\" style=\"background-color: #e1e1e1\">' +\n              '<div class=\"bar\" style=\"width: ' + pct + '; background-color: #04897a\"><\/div>' +\n            '<\/div>' +\n          '<\/div>'\n        )\n      }","html":true}],"defaultSortDesc":true,"defaultSorted":[{"id":"per","desc":true}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"highlight":true,"compact":true,"className":"votes-tbl","dataKey":"3ba21e2b20354fb7e427fa58c603cfd6","key":"3ba21e2b20354fb7e427fa58c603cfd6"},"children":[]},"class":"reactR_markup"},"evals":["tag.attribs.columns.2.cell"],"jsHooks":[]}</script>
+</div>
+</div>
+<div id="positional-leaders" class="section level2">
+<h2>Positional Leaders</h2>
+<p>Outside of knowing the consensus line-up it is also interesting to examine who is being selected more or less in each court position. The following tables collate the all players and their respective selections in each position.</p>
+<div class="tbl-votes">
+<div class="votes-header">
+<div class="votes-title">Goal Keeper</div>
+</div>
+<div id="htmlwidget-7750fba949d1c2105bad" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-7750fba949d1c2105bad">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"player":["Courtney Bruce","Sarah Klau"],"n":[100,81],"per":[0.552486187845304,0.447513812154696]},"columns":[{"accessor":"player","name":"Player","type":"character","align":"left","headerClassName":"header","filterable":false,"defaultSortDesc":false,"cell":[{"name":"div","attribs":{"className":"player-name"},"children":["Courtney Bruce"]},{"name":"div","attribs":{"className":"player-name"},"children":["Sarah Klau"]}],"maxWidth":300,"className":"cell group","style":{"fontSize":"14px"},"headerStyle":{"fontWeight":700}},{"accessor":"n","name":"No. of Selections","type":"numeric","align":"left","headerClassName":"header","defaultSortDesc":true,"cell":[{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["      100"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"100%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       81"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"81%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]}]},{"accessor":"per","name":"Percentage of Selections","type":"numeric","align":"left","headerClassName":"header","defaultSortDesc":true,"cell":"function(cellInfo) {\n        // Format as percentage\n        const pct = (cellInfo.value * 100).toFixed(1) + '%'\n        // Pad single-digit numbers\n        let value = pct.padStart(5)\n        // Render bar chart\n        return (\n          '<div class=\"bar-cell\">' +\n            '<span class=\"number\">' + value + '<\/span>' +\n            '<div class=\"bar-chart\" style=\"background-color: #e1e1e1\">' +\n              '<div class=\"bar\" style=\"width: ' + pct + '; background-color: #04897a\"><\/div>' +\n            '<\/div>' +\n          '<\/div>'\n        )\n      }","html":true}],"defaultSortDesc":true,"defaultSorted":[{"id":"per","desc":true}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"highlight":true,"compact":true,"className":"votes-tbl","dataKey":"ad18a2bb30f40ceb6b30dce1ae1f4ae2","key":"ad18a2bb30f40ceb6b30dce1ae1f4ae2"},"children":[]},"class":"reactR_markup"},"evals":["tag.attribs.columns.2.cell"],"jsHooks":[]}</script>
+</div>
+<div class="tbl-votes">
+<div class="votes-header">
+<div class="votes-title">Goal Defence</div>
+</div>
+<div id="htmlwidget-35fa22ff9b7278d74953" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-35fa22ff9b7278d74953">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"player":["April Brandley","Courtney Bruce","Jo Weston","Kim Jenner","Maddy Turner","Sam Poolman","Sarah Klau","Sunday Aryang"],"n":[30,52,69,10,8,1,5,6],"per":[0.165745856353591,0.287292817679558,0.38121546961326,0.0552486187845304,0.0441988950276243,0.00552486187845304,0.0276243093922652,0.0331491712707182]},"columns":[{"accessor":"player","name":"Player","type":"character","align":"left","headerClassName":"header","filterable":false,"defaultSortDesc":false,"cell":[{"name":"div","attribs":{"className":"player-name"},"children":["April Brandley"]},{"name":"div","attribs":{"className":"player-name"},"children":["Courtney Bruce"]},{"name":"div","attribs":{"className":"player-name"},"children":["Jo Weston"]},{"name":"div","attribs":{"className":"player-name"},"children":["Kim Jenner"]},{"name":"div","attribs":{"className":"player-name"},"children":["Maddy Turner"]},{"name":"div","attribs":{"className":"player-name"},"children":["Sam Poolman"]},{"name":"div","attribs":{"className":"player-name"},"children":["Sarah Klau"]},{"name":"div","attribs":{"className":"player-name"},"children":["Sunday Aryang"]}],"maxWidth":300,"className":"cell group","style":{"fontSize":"14px"},"headerStyle":{"fontWeight":700}},{"accessor":"n","name":"No. of Selections","type":"numeric","align":"left","headerClassName":"header","defaultSortDesc":true,"cell":[{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       30"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"43.4782608695652%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       52"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"75.3623188405797%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       69"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"100%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       10"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"14.4927536231884%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        8"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"11.5942028985507%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        1"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"1.44927536231884%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        5"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"7.2463768115942%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        6"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"8.69565217391304%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]}]},{"accessor":"per","name":"Percentage of Selections","type":"numeric","align":"left","headerClassName":"header","defaultSortDesc":true,"cell":"function(cellInfo) {\n        // Format as percentage\n        const pct = (cellInfo.value * 100).toFixed(1) + '%'\n        // Pad single-digit numbers\n        let value = pct.padStart(5)\n        // Render bar chart\n        return (\n          '<div class=\"bar-cell\">' +\n            '<span class=\"number\">' + value + '<\/span>' +\n            '<div class=\"bar-chart\" style=\"background-color: #e1e1e1\">' +\n              '<div class=\"bar\" style=\"width: ' + pct + '; background-color: #04897a\"><\/div>' +\n            '<\/div>' +\n          '<\/div>'\n        )\n      }","html":true}],"defaultSortDesc":true,"defaultSorted":[{"id":"per","desc":true}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"highlight":true,"compact":true,"className":"votes-tbl","dataKey":"472dba74fa31b2c0d33d85e4973a973f","key":"472dba74fa31b2c0d33d85e4973a973f"},"children":[]},"class":"reactR_markup"},"evals":["tag.attribs.columns.2.cell"],"jsHooks":[]}</script>
+</div>
+<div class="tbl-votes">
+<div class="votes-header">
+<div class="votes-title">Wing Defence</div>
+</div>
+<div id="htmlwidget-224f53a955f4795a1446" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-224f53a955f4795a1446">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"player":["Amy Parmenter","Ash Brazill","Gabi Simpson","Jamie-Lee Price","Jo Weston","Maddie Hay","Maddy Mcauliffe","Mahalia Cassidy","Sunday Aryang"],"n":[93,44,13,14,8,1,3,3,2],"per":[0.513812154696133,0.243093922651934,0.0718232044198895,0.0773480662983425,0.0441988950276243,0.00552486187845304,0.0165745856353591,0.0165745856353591,0.0110497237569061]},"columns":[{"accessor":"player","name":"Player","type":"character","align":"left","headerClassName":"header","filterable":false,"defaultSortDesc":false,"cell":[{"name":"div","attribs":{"className":"player-name"},"children":["Amy Parmenter"]},{"name":"div","attribs":{"className":"player-name"},"children":["Ash Brazill"]},{"name":"div","attribs":{"className":"player-name"},"children":["Gabi Simpson"]},{"name":"div","attribs":{"className":"player-name"},"children":["Jamie-Lee Price"]},{"name":"div","attribs":{"className":"player-name"},"children":["Jo Weston"]},{"name":"div","attribs":{"className":"player-name"},"children":["Maddie Hay"]},{"name":"div","attribs":{"className":"player-name"},"children":["Maddy Mcauliffe"]},{"name":"div","attribs":{"className":"player-name"},"children":["Mahalia Cassidy"]},{"name":"div","attribs":{"className":"player-name"},"children":["Sunday Aryang"]}],"maxWidth":300,"className":"cell group","style":{"fontSize":"14px"},"headerStyle":{"fontWeight":700}},{"accessor":"n","name":"No. of Selections","type":"numeric","align":"left","headerClassName":"header","defaultSortDesc":true,"cell":[{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       93"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"100%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       44"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"47.3118279569892%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       13"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"13.9784946236559%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       14"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"15.0537634408602%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        8"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"8.60215053763441%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        1"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"1.0752688172043%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        3"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"3.2258064516129%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        3"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"3.2258064516129%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        2"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"2.1505376344086%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]}]},{"accessor":"per","name":"Percentage of Selections","type":"numeric","align":"left","headerClassName":"header","defaultSortDesc":true,"cell":"function(cellInfo) {\n        // Format as percentage\n        const pct = (cellInfo.value * 100).toFixed(1) + '%'\n        // Pad single-digit numbers\n        let value = pct.padStart(5)\n        // Render bar chart\n        return (\n          '<div class=\"bar-cell\">' +\n            '<span class=\"number\">' + value + '<\/span>' +\n            '<div class=\"bar-chart\" style=\"background-color: #e1e1e1\">' +\n              '<div class=\"bar\" style=\"width: ' + pct + '; background-color: #04897a\"><\/div>' +\n            '<\/div>' +\n          '<\/div>'\n        )\n      }","html":true}],"defaultSortDesc":true,"defaultSorted":[{"id":"per","desc":true}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"highlight":true,"compact":true,"className":"votes-tbl","dataKey":"a12637dc920b8a15855da07b9ac0e7d4","key":"a12637dc920b8a15855da07b9ac0e7d4"},"children":[]},"class":"reactR_markup"},"evals":["tag.attribs.columns.2.cell"],"jsHooks":[]}</script>
+</div>
+<div class="tbl-votes">
+<div class="votes-header">
+<div class="votes-title">Centre</div>
+</div>
+<div id="htmlwidget-24e959707d53f3d77c84" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-24e959707d53f3d77c84">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"player":["Ash Brazill","Jamie-Lee Price","Jess Anstiss","Kate Moloney","Kim Ravaillion","Liz Watson","Maddy Proud","Paige Hadley"],"n":[4,49,1,18,89,1,12,7],"per":[0.0220994475138122,0.270718232044199,0.00552486187845304,0.0994475138121547,0.49171270718232,0.00552486187845304,0.0662983425414365,0.0386740331491713]},"columns":[{"accessor":"player","name":"Player","type":"character","align":"left","headerClassName":"header","filterable":false,"defaultSortDesc":false,"cell":[{"name":"div","attribs":{"className":"player-name"},"children":["Ash Brazill"]},{"name":"div","attribs":{"className":"player-name"},"children":["Jamie-Lee Price"]},{"name":"div","attribs":{"className":"player-name"},"children":["Jess Anstiss"]},{"name":"div","attribs":{"className":"player-name"},"children":["Kate Moloney"]},{"name":"div","attribs":{"className":"player-name"},"children":["Kim Ravaillion"]},{"name":"div","attribs":{"className":"player-name"},"children":["Liz Watson"]},{"name":"div","attribs":{"className":"player-name"},"children":["Maddy Proud"]},{"name":"div","attribs":{"className":"player-name"},"children":["Paige Hadley"]}],"maxWidth":300,"className":"cell group","style":{"fontSize":"14px"},"headerStyle":{"fontWeight":700}},{"accessor":"n","name":"No. of Selections","type":"numeric","align":"left","headerClassName":"header","defaultSortDesc":true,"cell":[{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        4"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"4.49438202247191%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       49"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"55.0561797752809%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        1"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"1.12359550561798%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       18"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"20.2247191011236%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       89"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"100%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        1"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"1.12359550561798%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       12"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"13.4831460674157%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        7"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"7.86516853932584%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]}]},{"accessor":"per","name":"Percentage of Selections","type":"numeric","align":"left","headerClassName":"header","defaultSortDesc":true,"cell":"function(cellInfo) {\n        // Format as percentage\n        const pct = (cellInfo.value * 100).toFixed(1) + '%'\n        // Pad single-digit numbers\n        let value = pct.padStart(5)\n        // Render bar chart\n        return (\n          '<div class=\"bar-cell\">' +\n            '<span class=\"number\">' + value + '<\/span>' +\n            '<div class=\"bar-chart\" style=\"background-color: #e1e1e1\">' +\n              '<div class=\"bar\" style=\"width: ' + pct + '; background-color: #04897a\"><\/div>' +\n            '<\/div>' +\n          '<\/div>'\n        )\n      }","html":true}],"defaultSortDesc":true,"defaultSorted":[{"id":"per","desc":true}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"highlight":true,"compact":true,"className":"votes-tbl","dataKey":"0d4e3ec19ece573403806ce05ecc3419","key":"0d4e3ec19ece573403806ce05ecc3419"},"children":[]},"class":"reactR_markup"},"evals":["tag.attribs.columns.2.cell"],"jsHooks":[]}</script>
+</div>
+<div class="tbl-votes">
+<div class="votes-header">
+<div class="votes-title">Wing Attack</div>
+</div>
+<div id="htmlwidget-3c4662f26d8f98ca47e4" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-3c4662f26d8f98ca47e4">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"player":["Ash Brazill","Kate Moloney","Kelsey Browne","Kim Ravaillion","Lara Dunkley","Laura Scherian","Liz Watson","Maddie Hay","Maddy Proud","Paige Hadley","Verity Charles"],"n":[1,13,52,4,1,4,17,15,14,54,6],"per":[0.00552486187845304,0.0718232044198895,0.287292817679558,0.0220994475138122,0.00552486187845304,0.0220994475138122,0.0939226519337017,0.0828729281767956,0.0773480662983425,0.298342541436464,0.0331491712707182]},"columns":[{"accessor":"player","name":"Player","type":"character","align":"left","headerClassName":"header","filterable":false,"defaultSortDesc":false,"cell":[{"name":"div","attribs":{"className":"player-name"},"children":["Ash Brazill"]},{"name":"div","attribs":{"className":"player-name"},"children":["Kate Moloney"]},{"name":"div","attribs":{"className":"player-name"},"children":["Kelsey Browne"]},{"name":"div","attribs":{"className":"player-name"},"children":["Kim Ravaillion"]},{"name":"div","attribs":{"className":"player-name"},"children":["Lara Dunkley"]},{"name":"div","attribs":{"className":"player-name"},"children":["Laura Scherian"]},{"name":"div","attribs":{"className":"player-name"},"children":["Liz Watson"]},{"name":"div","attribs":{"className":"player-name"},"children":["Maddie Hay"]},{"name":"div","attribs":{"className":"player-name"},"children":["Maddy Proud"]},{"name":"div","attribs":{"className":"player-name"},"children":["Paige Hadley"]},{"name":"div","attribs":{"className":"player-name"},"children":["Verity Charles"]}],"maxWidth":300,"className":"cell group","style":{"fontSize":"14px"},"headerStyle":{"fontWeight":700}},{"accessor":"n","name":"No. of Selections","type":"numeric","align":"left","headerClassName":"header","defaultSortDesc":true,"cell":[{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        1"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"1.85185185185185%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       13"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"24.0740740740741%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       52"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"96.2962962962963%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        4"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"7.40740740740741%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        1"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"1.85185185185185%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        4"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"7.40740740740741%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       17"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"31.4814814814815%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       15"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"27.7777777777778%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       14"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"25.9259259259259%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       54"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"100%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        6"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"11.1111111111111%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]}]},{"accessor":"per","name":"Percentage of Selections","type":"numeric","align":"left","headerClassName":"header","defaultSortDesc":true,"cell":"function(cellInfo) {\n        // Format as percentage\n        const pct = (cellInfo.value * 100).toFixed(1) + '%'\n        // Pad single-digit numbers\n        let value = pct.padStart(5)\n        // Render bar chart\n        return (\n          '<div class=\"bar-cell\">' +\n            '<span class=\"number\">' + value + '<\/span>' +\n            '<div class=\"bar-chart\" style=\"background-color: #e1e1e1\">' +\n              '<div class=\"bar\" style=\"width: ' + pct + '; background-color: #04897a\"><\/div>' +\n            '<\/div>' +\n          '<\/div>'\n        )\n      }","html":true}],"defaultSortDesc":true,"defaultSorted":[{"id":"per","desc":true}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"highlight":true,"compact":true,"className":"votes-tbl","dataKey":"3c9993a850cb11ac31ac64ac8448ab93","key":"3c9993a850cb11ac31ac64ac8448ab93"},"children":[]},"class":"reactR_markup"},"evals":["tag.attribs.columns.2.cell"],"jsHooks":[]}</script>
+</div>
+<div class="tbl-votes">
+<div class="votes-header">
+<div class="votes-title">Goal Attack</div>
+</div>
+<div id="htmlwidget-7736f7ac59481907299c" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-7736f7ac59481907299c">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"player":["Alice Teague-Neeld","Cara Koenen","Georgie Horjus","Gretel Bueta","Hannah Petty","Jo Weston","Sophie Dwyer","Sophie Garbin","Steph Wood"],"n":[1,2,1,105,1,1,7,1,62],"per":[0.00552486187845304,0.0110497237569061,0.00552486187845304,0.580110497237569,0.00552486187845304,0.00552486187845304,0.0386740331491713,0.00552486187845304,0.342541436464088]},"columns":[{"accessor":"player","name":"Player","type":"character","align":"left","headerClassName":"header","filterable":false,"defaultSortDesc":false,"cell":[{"name":"div","attribs":{"className":"player-name"},"children":["Alice Teague-Neeld"]},{"name":"div","attribs":{"className":"player-name"},"children":["Cara Koenen"]},{"name":"div","attribs":{"className":"player-name"},"children":["Georgie Horjus"]},{"name":"div","attribs":{"className":"player-name"},"children":["Gretel Bueta"]},{"name":"div","attribs":{"className":"player-name"},"children":["Hannah Petty"]},{"name":"div","attribs":{"className":"player-name"},"children":["Jo Weston"]},{"name":"div","attribs":{"className":"player-name"},"children":["Sophie Dwyer"]},{"name":"div","attribs":{"className":"player-name"},"children":["Sophie Garbin"]},{"name":"div","attribs":{"className":"player-name"},"children":["Steph Wood"]}],"maxWidth":300,"className":"cell group","style":{"fontSize":"14px"},"headerStyle":{"fontWeight":700}},{"accessor":"n","name":"No. of Selections","type":"numeric","align":"left","headerClassName":"header","defaultSortDesc":true,"cell":[{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        1"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"0.952380952380952%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        2"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"1.9047619047619%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        1"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"0.952380952380952%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["      105"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"100%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        1"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"0.952380952380952%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        1"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"0.952380952380952%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        7"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"6.66666666666667%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        1"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"0.952380952380952%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       62"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"59.0476190476191%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]}]},{"accessor":"per","name":"Percentage of Selections","type":"numeric","align":"left","headerClassName":"header","defaultSortDesc":true,"cell":"function(cellInfo) {\n        // Format as percentage\n        const pct = (cellInfo.value * 100).toFixed(1) + '%'\n        // Pad single-digit numbers\n        let value = pct.padStart(5)\n        // Render bar chart\n        return (\n          '<div class=\"bar-cell\">' +\n            '<span class=\"number\">' + value + '<\/span>' +\n            '<div class=\"bar-chart\" style=\"background-color: #e1e1e1\">' +\n              '<div class=\"bar\" style=\"width: ' + pct + '; background-color: #04897a\"><\/div>' +\n            '<\/div>' +\n          '<\/div>'\n        )\n      }","html":true}],"defaultSortDesc":true,"defaultSorted":[{"id":"per","desc":true}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"highlight":true,"compact":true,"className":"votes-tbl","dataKey":"ea2e3d2cc657bd02d65a17ac0c3945c3","key":"ea2e3d2cc657bd02d65a17ac0c3945c3"},"children":[]},"class":"reactR_markup"},"evals":["tag.attribs.columns.2.cell"],"jsHooks":[]}</script>
+</div>
+<div class="tbl-votes">
+<div class="votes-header">
+<div class="votes-title">Goal Shooter</div>
+</div>
+<div id="htmlwidget-b0ceedb9b616507d7fb2" class="reactable html-widget" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-b0ceedb9b616507d7fb2">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"player":["Caitlin Bassett","Cara Koenen","Donnell Wallam","Gretel Bueta","Sophie Garbin"],"n":[15,151,3,3,9],"per":[0.0828729281767956,0.834254143646409,0.0165745856353591,0.0165745856353591,0.0497237569060773]},"columns":[{"accessor":"player","name":"Player","type":"character","align":"left","headerClassName":"header","filterable":false,"defaultSortDesc":false,"cell":[{"name":"div","attribs":{"className":"player-name"},"children":["Caitlin Bassett"]},{"name":"div","attribs":{"className":"player-name"},"children":["Cara Koenen"]},{"name":"div","attribs":{"className":"player-name"},"children":["Donnell Wallam"]},{"name":"div","attribs":{"className":"player-name"},"children":["Gretel Bueta"]},{"name":"div","attribs":{"className":"player-name"},"children":["Sophie Garbin"]}],"maxWidth":300,"className":"cell group","style":{"fontSize":"14px"},"headerStyle":{"fontWeight":700}},{"accessor":"n","name":"No. of Selections","type":"numeric","align":"left","headerClassName":"header","defaultSortDesc":true,"cell":[{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["       15"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"9.93377483443709%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["      151"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"100%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        3"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"1.98675496688742%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        3"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"1.98675496688742%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]},{"name":"div","attribs":{"className":"bar-cell"},"children":[{"name":"span","attribs":{"className":"number"},"children":["        9"]},{"name":"div","attribs":{"style":{"marginRight":"6px"},"className":"bar-chart"},"children":[{"name":"div","attribs":{"style":{"width":"5.96026490066225%","backgroundColor":"#fbee01"},"className":"bar"},"children":[]}]}]}]},{"accessor":"per","name":"Percentage of Selections","type":"numeric","align":"left","headerClassName":"header","defaultSortDesc":true,"cell":"function(cellInfo) {\n        // Format as percentage\n        const pct = (cellInfo.value * 100).toFixed(1) + '%'\n        // Pad single-digit numbers\n        let value = pct.padStart(5)\n        // Render bar chart\n        return (\n          '<div class=\"bar-cell\">' +\n            '<span class=\"number\">' + value + '<\/span>' +\n            '<div class=\"bar-chart\" style=\"background-color: #e1e1e1\">' +\n              '<div class=\"bar\" style=\"width: ' + pct + '; background-color: #04897a\"><\/div>' +\n            '<\/div>' +\n          '<\/div>'\n        )\n      }","html":true}],"defaultSortDesc":true,"defaultSorted":[{"id":"per","desc":true}],"defaultPageSize":10,"paginationType":"numbers","showPageInfo":true,"minRows":1,"highlight":true,"compact":true,"className":"votes-tbl","dataKey":"a72b3679d54a46c27c9b94445bb8bc90","key":"a72b3679d54a46c27c9b94445bb8bc90"},"children":[]},"class":"reactR_markup"},"evals":["tag.attribs.columns.2.cell"],"jsHooks":[]}</script>
+</div>
+<hr />
+<p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
+<link href="https://fonts.googleapis.com/css?family=Karla:400,700|Fira+Mono&amp;display=fallback" rel="stylesheet"/>
+<style type="text/css">
+
+/* Whole document: */
+body{
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12pt;
+}
+
+/* Headers */
+h1{
+  font-size: 32px;
+  font-weight: bold;
+}
+h2{
+  font-size: 24px;
+  font-weight: bold;
+}
+h3{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Styles for the table container, title, and subtitle */
+.tbl-votes {
+  /* Center the table */
+  margin: 0 auto;
+  /* Reduce the table width */
+  width: 700px;
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.lineup-votes {
+  /* Center the table */
+  margin: 0 auto;
+  /* Reduce the table width */
+  width: 600px;
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.votes-header {
+  margin: 8px 0;
+  font-size: 16px;
+}
+
+.lineup-header {
+  margin: 8px 0;
+  font-size: 16px;
+}
+
+.votes-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.lineup-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Styles for the table */
+.votes-tbl {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.votes-tbl a {
+  color: inherit;
+}
+
+/* Styles for the column headers */
+.header {
+  border-bottom: 2px solid #555;
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.header:hover {
+  background-color: #eee;
+}
+
+/* Styles for the bar charts */
+.bar-cell {
+  display: flex;
+  align-items: center;
+}
+
+.player-name {
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.pos-name {
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 850;
+  color: "#04897a";
+}
+
+.number {
+  font-family: "Fira Mono", Consolas, Monaco, monospace;
+  font-size: 14px;
+  white-space: pre;
+}
+
+.bar-chart {
+  flex-grow: 1;
+  margin-left: 6px;
+  height: 14px;
+}
+
+.bar {
+  height: 100%;
+}
+
+/* Others from existing docs */
+.author,.date{
+    display: none;
+}
+
+.title {
+  margin: 18px 0;
+  font-size: 16px;
+}
+
+.title h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+</style>
+<style type="text/css">
+/* rmarkdown html documents */
+.main-container {
+  max-width: 1054px !important;
+}
+
+h1.title {
+  display: none;
+}
+
+/* pkgdown articles */
+.contents {
+  width: 1054px;
+}
+
+.page-header {
+  display: none;
+}
+</style>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

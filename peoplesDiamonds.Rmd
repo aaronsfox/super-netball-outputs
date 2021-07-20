@@ -1,0 +1,1496 @@
+---
+title: "The People's Diamonds"
+author: "Aaron Fox"
+date: "19/07/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = FALSE, cache = TRUE)
+
+#Suppres all warnings
+options(warn=-1)
+
+#Suppress dplyr warnings
+options(dplyr.summarise.inform = FALSE)
+
+#Load libraries
+shhh <- suppressPackageStartupMessages # It's a library, so shhh!
+shhh(library(reactable))
+shhh(library(htmltools))
+shhh(library(googlesheets4))
+shhh(library(dplyr))
+
+#Put googlesheets into deauth mode
+gs4_deauth()
+
+```
+
+# The People's Diamonds
+
+**Please feel free to contact the authors of this work, [Alice Sweeting](https://twitter.com/alicesweeting) and [Aaron Fox](https://twitter.com/aaron_s_fox) on Twitter, if you have any questions about the data.**
+
+Selecting the national Diamonds team is a difficult and unenviable task at any time, so why not outsource (*DISCLAIMER: just so everyone's clear, there was no actual outsourcing...*) to those who know the game best (well according to them at least...) — the fans! These date are taken from [Alice Sweeting's Poll](bit.ly/AusDiamonds12) for who 'the people' would like to see suiting up for Australia in late 2021.
+
+```{r loadData, echo = FALSE, include = TRUE, results = 'hide', message = FALSE}
+
+#Read in data from google sheets
+data <- read_sheet("https://docs.google.com/spreadsheets/d/1hZydRq9skUL7Tvx0mmcSWrfy2bq9t_q9NbQu4EPVrW0/edit?usp=sharing")
+
+#Quick check to replace Donna Wallam spelling error
+data[data == "Donna Wallam"] <- "Donnell Wallam"
+
+#Rename bench columns for ease of use
+names(data)[names(data) == "Bench...8"] <- "Bench1"
+names(data)[names(data) == "Bench...9"] <- "Bench2"
+names(data)[names(data) == "Bench...10"] <- "Bench3"
+names(data)[names(data) == "Bench...11"] <- "Bench4"
+names(data)[names(data) == "Bench...12"] <- "Bench5"
+
+```
+## Team Selection
+
+Identifying a consensus line-up based on voting is a potentially complex tasks. There are a couple of different ways we could go about doing this. The approach we'll take here is to look at the most commonly selected player at each position, and consider this to be the consensus starting line-up. If there is a player who has received the most votes across multiple positions, we'll slot them into their highest voted position.
+
+```{r consensusGrouped, echo = FALSE}
+
+# The first option is to look at each individual vote for the starting 7 as a whole, and identify the most commonly chosen group. Doing this, we end up with a line-up of:
+
+#Strip out the starting 7 columns from the data
+starting7 <- select(data, GK, GD, WD, C, WA, GA, GS)
+
+#Set character list for starting positions
+startingPosLabels <- c("GK", "GD", "WD", "C", "WA", "GA", "GS")
+
+#Identify the unique line-ups selected
+uniqueLineupsCount <- starting7 %>%
+  group_by_all() %>%
+  summarise(COUNT = n()) %>%
+  arrange(-COUNT)
+
+#Take the top line-up
+#Note that there could be equals here --- but we'll just accept this for now
+
+#Extract the first listed position from each column
+consensusGroupedPos <- vector("list", length(startingPosLabels))
+for (pp in 1:length(startingPosLabels)) {
+  consensusGroupedPos[[pp]] <- uniqueLineupsCount[[startingPosLabels[pp]]][1]
+}
+
+#### TODO: display consensus grouped lineup --- not using for now
+
+```
+
+```{r consensusVoted, echo = FALSE}
+
+#Get the list of unique players across the starting 7 positions
+uniqueStarters <- unique(as.vector(as.matrix(starting7)))
+
+#Create blank dataframe to store values in
+starterVotes <- data.frame(player = character(),
+                           position = character(),
+                           n = numeric())
+
+#Loop through players
+for (ii in 1:length(uniqueStarters)) {
+
+  #Set list to add values to
+  playerPosCount <- vector("list", length(startingPosLabels))
+
+  #Get count for each position position
+  countGK = starting7 %>% filter(GK == uniqueStarters[ii]) %>% count(GK)
+  countGD = starting7 %>% filter(GD == uniqueStarters[ii]) %>% count(GD)
+  countWD = starting7 %>% filter(WD == uniqueStarters[ii]) %>% count(WD)
+  countC = starting7 %>% filter(C == uniqueStarters[ii]) %>% count(C)
+  countWA = starting7 %>% filter(WA == uniqueStarters[ii]) %>% count(WA)
+  countGA = starting7 %>% filter(GA == uniqueStarters[ii]) %>% count(GA)
+  countGS = starting7 %>% filter(GS == uniqueStarters[ii]) %>% count(GS)
+
+  #Extract actual count value and append to list
+  if (nrow(countGK) > 0) {
+    playerPosCount[[1]] <- countGK$n
+  } else {
+    playerPosCount[[1]] <- 0
+  }
+  if (nrow(countGD) > 0) {
+    playerPosCount[[2]] <- countGD$n
+  } else {
+    playerPosCount[[2]] <- 0
+  }
+  if (nrow(countWD) > 0) {
+    playerPosCount[[3]] <- countWD$n
+  } else {
+    playerPosCount[[3]] <- 0
+  }
+  if (nrow(countC) > 0) {
+    playerPosCount[[4]] <- countC$n
+  } else {
+    playerPosCount[[4]] <- 0
+  }
+  if (nrow(countWA) > 0) {
+    playerPosCount[[5]] <- countWA$n
+  } else {
+    playerPosCount[[5]] <- 0
+  }
+  if (nrow(countGA) > 0) {
+    playerPosCount[[6]] <- countGA$n
+  } else {
+    playerPosCount[[6]] <- 0
+  }
+  if (nrow(countGS) > 0) {
+    playerPosCount[[7]] <- countGS$n
+  } else {
+    playerPosCount[[7]] <- 0
+  }
+
+  #Append starter votes to dataframe
+  for (pp in 1:length(startingPosLabels)) {
+    starterVotes <- rbind(starterVotes,
+                          data.frame(player = uniqueStarters[ii],
+                          position = startingPosLabels[pp],
+                          n = playerPosCount[[pp]]))
+
+  }
+
+} #end of unique starters loop
+
+#Identify the consensus voted at each position
+#Takes into account if they have more votes elsewhere
+consensusVotedPos <- vector("list", length(startingPosLabels))
+consensusVotedPer <- vector("list", length(startingPosLabels))
+for (pp in 1:length(startingPosLabels)) {
+
+  #Filter for current position
+  currPos <- starterVotes %>% filter(position == startingPosLabels[pp]) %>% arrange(-n)
+
+  #Put a check in place to exit if the right player is found
+  searchPlayer <- TRUE
+  checkVal <- 1
+  while (searchPlayer) {
+    #Get top vote getter
+    topVoteGetter <- currPos$player[checkVal]
+    #Check if this is their top vote getting position
+    currPlayer <- starterVotes %>% filter(player == topVoteGetter) %>% arrange(-n)
+    if (currPlayer$position[1] == startingPosLabels[pp]) {
+      #Set this player in the consensus voted list
+      consensusVotedPos[[pp]] <- topVoteGetter
+      #Calculate the percentage of votes the player received
+      consensusVotedPer[[pp]] <- currPos$n[checkVal] / nrow(data)
+      #Exit search player loop
+      searchPlayer = FALSE
+    } else {
+      #Reloop back and add to the checkVal to grab the next player
+      checkVal <- checkVal + 1
+    }
+  }
+}
+
+#Create dataframe to present consensus starting line-up
+consensusVotedLineUp <- data.frame(position = startingPosLabels,
+                                   player = as.character(consensusVotedPos),
+                                   per = as.numeric(consensusVotedPer))
+
+#Create reactable to display consensus lineup
+tblStarters <- reactable(
+
+  #Set data
+  consensusVotedLineUp,
+
+  #Set pagination
+  pagination = FALSE,
+
+  #Set parameters
+  highlight = TRUE,
+  searchable = FALSE,
+  sortable = FALSE,
+
+  #Set default column parameters
+  defaultColDef = colDef(headerClass = "header", align = "left"),
+
+  #Create a list of the columns
+  columns = list(
+
+    #Create the position column
+    position  = colDef(
+      name = "Position",
+      align = "center",
+      maxWidth = 150,
+      filterable = FALSE,
+      class = "cell group",
+      headerStyle = list(fontWeight = 1000),
+      style = list(color = "#04897a", fontSize = "14px"),
+      cell = function(value) {
+        div(class = "pos-name", value)
+      },
+    ),
+
+    #Create the player column
+    player = colDef(
+      name = "Player",
+      defaultSortOrder = "asc",
+      align = "left",
+      maxWidth = 300,
+      filterable = FALSE,
+      class = "cell group",
+      headerStyle = list(fontWeight = 700),
+      style = list(fontSize = "14px"),
+      cell = function(value) {
+        div(class = "player-name", value)
+      },
+    ),
+
+    #Create the percentage column
+    #Based on: https://glin.github.io/reactable/articles/building-twitter-followers.html
+    per = colDef(
+      name = "Percentage of Selections",
+      defaultSortOrder = "desc",
+      #Java style formatting
+      cell = JS("function(cellInfo) {
+        // Format as percentage
+        const pct = (cellInfo.value * 100).toFixed(1) + '%'
+        // Pad single-digit numbers
+        let value = pct.padStart(5)
+        // Render bar chart
+        return (
+          '<div class=\"bar-cell\">' +
+            '<span class=\"number\">' + value + '</span>' +
+            '<div class=\"bar-chart\" style=\"background-color: #e1e1e1\">' +
+              '<div class=\"bar\" style=\"width: ' + pct + '; background-color: #04897a\"></div>' +
+            '</div>' +
+          '</div>'
+        )
+      }"),
+      html = TRUE,
+    )
+
+  ), #end of column list
+
+  #Set compact style
+  compact = TRUE,
+
+  #Set table class
+  class = "lineup-tbl"
+
+)
+
+#Add the title and subtitle
+div(class = "lineup-votes",
+    div(class = "lineup-header",
+        div(class = "lineup-title", "Consensus Starting Line-Up"),
+    ),
+    tblStarters
+)
+
+```
+
+After identifying our starting line-up we need to fill out the five bench spots. Playing positions and combinations would typically be taken into consideration, however given the variation across the individually selected line-ups, for us it makes more sense to focus on the remaining most selected players outside of the starting line-up. Essentially these players represent the next 'most selected' and proposed next most talented players.
+
+```{r completeLineUp, echo = FALSE}
+
+#Get unique player list
+uniquePlayers <- unique(as.vector(as.matrix(data)))
+
+#Set up dataframe to tally total values
+allVotes <- data.frame(player = character(),
+                       n = numeric())
+
+#Loop through players and get total count across each column
+for (ii in 1:length(uniquePlayers)) {
+
+  #Set starting votes for player
+  votes = 0
+
+  #Get count for each position position
+  countGK = data %>% filter(GK == uniquePlayers[ii]) %>% count(GK)
+  countGD = data %>% filter(GD == uniquePlayers[ii]) %>% count(GD)
+  countWD = data %>% filter(WD == uniquePlayers[ii]) %>% count(WD)
+  countC = data %>% filter(C == uniquePlayers[ii]) %>% count(C)
+  countWA = data %>% filter(WA == uniquePlayers[ii]) %>% count(WA)
+  countGA = data %>% filter(GA == uniquePlayers[ii]) %>% count(GA)
+  countGS = data %>% filter(GS == uniquePlayers[ii]) %>% count(GS)
+  countB1 = data %>% filter(Bench1 == uniquePlayers[ii]) %>% count(Bench1)
+  countB2 = data %>% filter(Bench2 == uniquePlayers[ii]) %>% count(Bench2)
+  countB3 = data %>% filter(Bench3 == uniquePlayers[ii]) %>% count(Bench3)
+  countB4 = data %>% filter(Bench4 == uniquePlayers[ii]) %>% count(Bench4)
+  countB5 = data %>% filter(Bench5 == uniquePlayers[ii]) %>% count(Bench5)
+
+  #Extract actual count value and append to list
+  if (nrow(countGK) > 0) {
+    votes <- votes + countGK$n
+  }
+  if (nrow(countGD) > 0) {
+    votes <- votes + countGD$n
+  }
+  if (nrow(countWD) > 0) {
+    votes <- votes + countWD$n
+  }
+  if (nrow(countC) > 0) {
+    votes <- votes + countC$n
+  }
+  if (nrow(countWA) > 0) {
+    votes <- votes + countWA$n
+  }
+  if (nrow(countGA) > 0) {
+    votes <- votes + countGA$n
+  }
+  if (nrow(countGS) > 0) {
+    votes <- votes + countGS$n
+  }
+  if (nrow(countB1) > 0) {
+    votes <- votes + countB1$n
+  }
+  if (nrow(countB2) > 0) {
+    votes <- votes + countB2$n
+  }
+  if (nrow(countB3) > 0) {
+    votes <- votes + countB3$n
+  }
+  if (nrow(countB4) > 0) {
+    votes <- votes + countB4$n
+  }
+  if (nrow(countB5) > 0) {
+    votes <- votes + countB5$n
+  }
+
+  #Append total votes to dataframe
+  allVotes <- rbind(allVotes,
+                    data.frame(player = uniquePlayers[ii],
+                          n = votes))
+
+} #end unique players loop
+
+#Sort all votes
+allVotes <- allVotes %>% arrange(-n)
+
+#Extract just bench votes
+benchVotes <- allVotes[ ! allVotes$player %in% as.character(consensusVotedPos), ]
+
+#Extract the first five from the dataframe to grab the bench player list
+benchPlayers <- benchVotes$player[1:5]
+
+#Create dataframe for bench players
+consensusVotedBench <- data.frame(position = c("Bench", "Bench", "Bench", "Bench", "Bench"),
+                                  player = benchPlayers)
+
+#Bind dataframes together
+consensusTeam <- rbind(select(consensusVotedLineUp, position, player), consensusVotedBench)
+
+#Create reactable to display consensus team
+tblTeam <- reactable(
+
+  #Set data
+  consensusTeam,
+
+  #Set pagination
+  pagination = FALSE,
+
+  #Set parameters
+  highlight = TRUE,
+  searchable = FALSE,
+  sortable = FALSE,
+
+  #Set default column parameters
+  defaultColDef = colDef(headerClass = "header", align = "left"),
+
+  #Create a list of the columns
+  columns = list(
+
+    #Create the position column
+    position  = colDef(
+      name = "Position",
+      align = "center",
+      maxWidth = 150,
+      filterable = FALSE,
+      class = "cell group",
+      headerStyle = list(fontWeight = 1000),
+      style = list(color = "#04897a", fontSize = "14px"),
+      cell = function(value) {
+        div(class = "pos-name", value)
+      },
+    ),
+
+    #Create the player column
+    player = colDef(
+      name = "Player",
+      defaultSortOrder = "asc",
+      align = "center",
+      maxWidth = 300,
+      filterable = FALSE,
+      class = "cell group",
+      headerStyle = list(fontWeight = 700),
+      style = list(fontSize = "14px"),
+      cell = function(value) {
+        div(class = "player-name", value)
+      },
+    )
+
+  ), #end of column list
+
+  #Set compact style
+  compact = TRUE,
+
+  #Set table class
+  class = "lineup-tbl"
+
+)
+
+#Add the title and subtitle
+div(class = "lineup-votes",
+    div(class = "lineup-header",
+        div(class = "lineup-title", "Consensus Diamonds Team"),
+    ),
+    tblTeam
+)
+
+```
+
+## Most Selected Players
+
+The consensus line-up and team approaches above consider how people have structured their teams around positional selections. Another potential idea for selecting the consensus team is to examine which players have been the most selected irrespective of the starting versus bench positions — and attempt to build line-up combinations from these most selected players. Looking at this data also provides an opportunity to see which players are on the edge of 'selection' or who the up-and-coming players potentially nearing selection are.
+
+```{r mostSelected, echo = FALSE}
+
+#Add a percentage column to the all votes dataframe
+allVotes$per <- allVotes$n / nrow(data)
+
+#Create table for all votes
+tblVotes <- reactable(
+
+  #Set data
+  allVotes,
+
+  #Set pagination
+  pagination = TRUE,
+  defaultPageSize = 10,
+
+  #Set parameters
+  highlight = TRUE,
+  searchable = FALSE,
+
+  #Set the default sort column
+  defaultSorted = "per",
+  defaultSortOrder = "desc",
+
+  #Set default column parameters
+  defaultColDef = colDef(headerClass = "header", align = "left"),
+
+  #Create a list of the columns
+  columns = list(
+
+    #Create the player column
+    player = colDef(
+      name = "Player",
+      defaultSortOrder = "asc",
+      align = "left",
+      maxWidth = 300,
+      filterable = FALSE,
+      class = "cell group",
+      headerStyle = list(fontWeight = 700),
+      style = list(fontSize = "14px"),
+      cell = function(value) {
+        div(class = "player-name", value)
+      },
+    ),
+
+    #Create the number of votes column
+    n = colDef(
+      name = "No. of Selections",
+      defaultSortOrder = "desc",
+      cell = function(value) {
+        width <- paste0(value * 100 / max(allVotes$n), "%")
+        value <- format(value, width = 9, justify = "right")
+        bar <- div(
+          class = "bar-chart",
+          style = list(marginRight = "6px"),
+          div(class = "bar", style = list(width = width, backgroundColor = "#fbee01"))
+        )
+        div(class = "bar-cell", span(class = "number", value), bar)
+      }
+    ),
+
+    #Create the percentage column
+    #Based on: https://glin.github.io/reactable/articles/building-twitter-followers.html
+    per = colDef(
+      name = "Percentage of Selections",
+      defaultSortOrder = "desc",
+      #Java style formatting
+      cell = JS("function(cellInfo) {
+        // Format as percentage
+        const pct = (cellInfo.value * 100).toFixed(1) + '%'
+        // Pad single-digit numbers
+        let value = pct.padStart(5)
+        // Render bar chart
+        return (
+          '<div class=\"bar-cell\">' +
+            '<span class=\"number\">' + value + '</span>' +
+            '<div class=\"bar-chart\" style=\"background-color: #e1e1e1\">' +
+              '<div class=\"bar\" style=\"width: ' + pct + '; background-color: #04897a\"></div>' +
+            '</div>' +
+          '</div>'
+        )
+      }"),
+      html = TRUE,
+    )
+
+  ), #end of column list
+
+  #Set compact style
+  compact = TRUE,
+
+  #Set table class
+  class = "votes-tbl"
+
+)
+
+#Add the title and subtitle
+div(class = "tbl-votes",
+    div(class = "votes-header",
+        div(class = "votes-title", "Summary of All Selected Players"),
+    ),
+    tblVotes
+)
+
+```
+
+## Positional Leaders
+
+Outside of knowing the consensus line-up it is also interesting to examine who is being selected more or less in each court position. The following tables collate the all players and their respective selections in each position.
+
+```{r tableGK, echo = FALSE}
+
+#Get the vote counts for goal keeps
+dataGK <- select(data, GK) %>% count(GK)
+
+#Rename player name column
+names(dataGK)[names(dataGK) == "GK"] <- "player"
+
+#Convert the number of votes to percentage
+dataGK$per <- dataGK$n / nrow(data)
+
+#Create table
+tblGK <- reactable(
+
+  #Set data
+  dataGK,
+
+  #Set pagination
+  pagination = TRUE,
+  defaultPageSize = 10,
+
+  #Set parameters
+  highlight = TRUE,
+  searchable = FALSE,
+
+  #Set the default sort column
+  defaultSorted = "per",
+  defaultSortOrder = "desc",
+
+  #Set default column parameters
+  defaultColDef = colDef(headerClass = "header", align = "left"),
+
+  #Create a list of the columns
+  columns = list(
+
+    #Create the player column
+    player = colDef(
+      name = "Player",
+      defaultSortOrder = "asc",
+      align = "left",
+      maxWidth = 300,
+      filterable = FALSE,
+      class = "cell group",
+      headerStyle = list(fontWeight = 700),
+      style = list(fontSize = "14px"),
+      cell = function(value) {
+        div(class = "player-name", value)
+      },
+    ),
+
+    #Create the number of votes column
+    n = colDef(
+      name = "No. of Selections",
+      defaultSortOrder = "desc",
+      cell = function(value) {
+        width <- paste0(value * 100 / max(dataGK$n), "%")
+        value <- format(value, width = 9, justify = "right")
+        bar <- div(
+          class = "bar-chart",
+          style = list(marginRight = "6px"),
+          div(class = "bar", style = list(width = width, backgroundColor = "#fbee01"))
+        )
+        div(class = "bar-cell", span(class = "number", value), bar)
+      }
+    ),
+
+    #Create the percentage column
+    #Based on: https://glin.github.io/reactable/articles/building-twitter-followers.html
+    per = colDef(
+      name = "Percentage of Selections",
+      defaultSortOrder = "desc",
+      #Java style formatting
+      cell = JS("function(cellInfo) {
+        // Format as percentage
+        const pct = (cellInfo.value * 100).toFixed(1) + '%'
+        // Pad single-digit numbers
+        let value = pct.padStart(5)
+        // Render bar chart
+        return (
+          '<div class=\"bar-cell\">' +
+            '<span class=\"number\">' + value + '</span>' +
+            '<div class=\"bar-chart\" style=\"background-color: #e1e1e1\">' +
+              '<div class=\"bar\" style=\"width: ' + pct + '; background-color: #04897a\"></div>' +
+            '</div>' +
+          '</div>'
+        )
+      }"),
+      html = TRUE,
+    )
+
+  ), #end of column list
+
+  #Set compact style
+  compact = TRUE,
+
+  #Set table class
+  class = "votes-tbl"
+
+)
+
+#Add the title and subtitle
+div(class = "tbl-votes",
+    div(class = "votes-header",
+        div(class = "votes-title", "Goal Keeper"),
+    ),
+    tblGK
+)
+
+```
+
+```{r tableGD, echo = FALSE}
+
+#Get the vote counts for goal keeps
+dataGD <- select(data, GD) %>% count(GD)
+
+#Rename player name column
+names(dataGD)[names(dataGD) == "GD"] <- "player"
+
+#Convert the number of votes to percentage
+dataGD$per <- dataGD$n / nrow(data)
+
+#Create table
+tblGD <- reactable(
+
+  #Set data
+  dataGD,
+
+  #Set pagination
+  pagination = TRUE,
+  defaultPageSize = 10,
+
+  #Set parameters
+  highlight = TRUE,
+  searchable = FALSE,
+
+  #Set the default sort column
+  defaultSorted = "per",
+  defaultSortOrder = "desc",
+
+  #Set default column parameters
+  defaultColDef = colDef(headerClass = "header", align = "left"),
+
+  #Create a list of the columns
+  columns = list(
+
+    #Create the player column
+    player = colDef(
+      name = "Player",
+      defaultSortOrder = "asc",
+      align = "left",
+      maxWidth = 300,
+      filterable = FALSE,
+      class = "cell group",
+      headerStyle = list(fontWeight = 700),
+      style = list(fontSize = "14px"),
+      cell = function(value) {
+        div(class = "player-name", value)
+      },
+    ),
+    
+    #Create the number of votes column
+    n = colDef(
+      name = "No. of Selections",
+      defaultSortOrder = "desc",
+      cell = function(value) {
+        width <- paste0(value * 100 / max(dataGD$n), "%")
+        value <- format(value, width = 9, justify = "right")
+        bar <- div(
+          class = "bar-chart",
+          style = list(marginRight = "6px"),
+          div(class = "bar", style = list(width = width, backgroundColor = "#fbee01"))
+        )
+        div(class = "bar-cell", span(class = "number", value), bar)
+      }
+    ),
+
+    #Create the percentage column
+    #Based on: https://glin.github.io/reactable/articles/building-twitter-followers.html
+    per = colDef(
+      name = "Percentage of Selections",
+      defaultSortOrder = "desc",
+      #Java style formatting
+      cell = JS("function(cellInfo) {
+        // Format as percentage
+        const pct = (cellInfo.value * 100).toFixed(1) + '%'
+        // Pad single-digit numbers
+        let value = pct.padStart(5)
+        // Render bar chart
+        return (
+          '<div class=\"bar-cell\">' +
+            '<span class=\"number\">' + value + '</span>' +
+            '<div class=\"bar-chart\" style=\"background-color: #e1e1e1\">' +
+              '<div class=\"bar\" style=\"width: ' + pct + '; background-color: #04897a\"></div>' +
+            '</div>' +
+          '</div>'
+        )
+      }"),
+      html = TRUE,
+    )
+
+  ), #end of column list
+
+  #Set compact style
+  compact = TRUE,
+
+  #Set table class
+  class = "votes-tbl"
+
+)
+
+#Add the title and subtitle
+div(class = "tbl-votes",
+    div(class = "votes-header",
+        div(class = "votes-title", "Goal Defence"),
+    ),
+    tblGD
+)
+
+```
+
+```{r tableWD, echo = FALSE}
+
+#Get the vote counts for goal keeps
+dataWD <- select(data, WD) %>% count(WD)
+
+#Rename player name column
+names(dataWD)[names(dataWD) == "WD"] <- "player"
+
+#Convert the number of votes to percentage
+dataWD$per <- dataWD$n / nrow(data)
+
+#Create table
+tblWD <- reactable(
+
+  #Set data
+  dataWD,
+
+  #Set pagination
+  pagination = TRUE,
+  defaultPageSize = 10,
+
+  #Set parameters
+  highlight = TRUE,
+  searchable = FALSE,
+
+  #Set the default sort column
+  defaultSorted = "per",
+  defaultSortOrder = "desc",
+
+  #Set default column parameters
+  defaultColDef = colDef(headerClass = "header", align = "left"),
+
+  #Create a list of the columns
+  columns = list(
+
+    #Create the player column
+    player = colDef(
+      name = "Player",
+      defaultSortOrder = "asc",
+      align = "left",
+      maxWidth = 300,
+      filterable = FALSE,
+      class = "cell group",
+      headerStyle = list(fontWeight = 700),
+      style = list(fontSize = "14px"),
+      cell = function(value) {
+        div(class = "player-name", value)
+      },
+    ),
+    
+    #Create the number of votes column
+    n = colDef(
+      name = "No. of Selections",
+      defaultSortOrder = "desc",
+      cell = function(value) {
+        width <- paste0(value * 100 / max(dataWD$n), "%")
+        value <- format(value, width = 9, justify = "right")
+        bar <- div(
+          class = "bar-chart",
+          style = list(marginRight = "6px"),
+          div(class = "bar", style = list(width = width, backgroundColor = "#fbee01"))
+        )
+        div(class = "bar-cell", span(class = "number", value), bar)
+      }
+    ),
+
+    #Create the percentage column
+    #Based on: https://glin.github.io/reactable/articles/building-twitter-followers.html
+    per = colDef(
+      name = "Percentage of Selections",
+      defaultSortOrder = "desc",
+      #Java style formatting
+      cell = JS("function(cellInfo) {
+        // Format as percentage
+        const pct = (cellInfo.value * 100).toFixed(1) + '%'
+        // Pad single-digit numbers
+        let value = pct.padStart(5)
+        // Render bar chart
+        return (
+          '<div class=\"bar-cell\">' +
+            '<span class=\"number\">' + value + '</span>' +
+            '<div class=\"bar-chart\" style=\"background-color: #e1e1e1\">' +
+              '<div class=\"bar\" style=\"width: ' + pct + '; background-color: #04897a\"></div>' +
+            '</div>' +
+          '</div>'
+        )
+      }"),
+      html = TRUE,
+    )
+
+  ), #end of column list
+
+  #Set compact style
+  compact = TRUE,
+
+  #Set table class
+  class = "votes-tbl"
+
+)
+
+#Add the title and subtitle
+div(class = "tbl-votes",
+    div(class = "votes-header",
+        div(class = "votes-title", "Wing Defence"),
+    ),
+    tblWD
+)
+
+```
+
+```{r tableC, echo = FALSE}
+
+#Get the vote counts for goal keeps
+dataC <- select(data, C) %>% count(C)
+
+#Rename player name column
+names(dataC)[names(dataC) == "C"] <- "player"
+
+#Convert the number of votes to percentage
+dataC$per <- dataC$n / nrow(data)
+
+#Create table
+tblC <- reactable(
+
+  #Set data
+  dataC,
+
+  #Set pagination
+  pagination = TRUE,
+  defaultPageSize = 10,
+
+  #Set parameters
+  highlight = TRUE,
+  searchable = FALSE,
+
+  #Set the default sort column
+  defaultSorted = "per",
+  defaultSortOrder = "desc",
+
+  #Set default column parameters
+  defaultColDef = colDef(headerClass = "header", align = "left"),
+
+  #Create a list of the columns
+  columns = list(
+
+    #Create the player column
+    player = colDef(
+      name = "Player",
+      defaultSortOrder = "asc",
+      align = "left",
+      maxWidth = 300,
+      filterable = FALSE,
+      class = "cell group",
+      headerStyle = list(fontWeight = 700),
+      style = list(fontSize = "14px"),
+      cell = function(value) {
+        div(class = "player-name", value)
+      },
+    ),
+    
+    #Create the number of votes column
+    n = colDef(
+      name = "No. of Selections",
+      defaultSortOrder = "desc",
+      cell = function(value) {
+        width <- paste0(value * 100 / max(dataC$n), "%")
+        value <- format(value, width = 9, justify = "right")
+        bar <- div(
+          class = "bar-chart",
+          style = list(marginRight = "6px"),
+          div(class = "bar", style = list(width = width, backgroundColor = "#fbee01"))
+        )
+        div(class = "bar-cell", span(class = "number", value), bar)
+      }
+    ),
+
+    #Create the percentage column
+    #Based on: https://glin.github.io/reactable/articles/building-twitter-followers.html
+    per = colDef(
+      name = "Percentage of Selections",
+      defaultSortOrder = "desc",
+      #Java style formatting
+      cell = JS("function(cellInfo) {
+        // Format as percentage
+        const pct = (cellInfo.value * 100).toFixed(1) + '%'
+        // Pad single-digit numbers
+        let value = pct.padStart(5)
+        // Render bar chart
+        return (
+          '<div class=\"bar-cell\">' +
+            '<span class=\"number\">' + value + '</span>' +
+            '<div class=\"bar-chart\" style=\"background-color: #e1e1e1\">' +
+              '<div class=\"bar\" style=\"width: ' + pct + '; background-color: #04897a\"></div>' +
+            '</div>' +
+          '</div>'
+        )
+      }"),
+      html = TRUE,
+    )
+
+  ), #end of column list
+
+  #Set compact style
+  compact = TRUE,
+
+  #Set table class
+  class = "votes-tbl"
+
+)
+
+#Add the title and subtitle
+div(class = "tbl-votes",
+    div(class = "votes-header",
+        div(class = "votes-title", "Centre"),
+    ),
+    tblC
+)
+
+```
+
+```{r tableWA, echo = FALSE}
+
+#Get the vote counts for goal keeps
+dataWA <- select(data, WA) %>% count(WA)
+
+#Rename player name column
+names(dataWA)[names(dataWA) == "WA"] <- "player"
+
+#Convert the number of votes to percentage
+dataWA$per <- dataWA$n / nrow(data)
+
+#Create table
+tblWA <- reactable(
+
+  #Set data
+  dataWA,
+
+  #Set pagination
+  pagination = TRUE,
+  defaultPageSize = 10,
+
+  #Set parameters
+  highlight = TRUE,
+  searchable = FALSE,
+
+  #Set the default sort column
+  defaultSorted = "per",
+  defaultSortOrder = "desc",
+
+  #Set default column parameters
+  defaultColDef = colDef(headerClass = "header", align = "left"),
+
+  #Create a list of the columns
+  columns = list(
+
+    #Create the player column
+    player = colDef(
+      name = "Player",
+      defaultSortOrder = "asc",
+      align = "left",
+      maxWidth = 300,
+      filterable = FALSE,
+      class = "cell group",
+      headerStyle = list(fontWeight = 700),
+      style = list(fontSize = "14px"),
+      cell = function(value) {
+        div(class = "player-name", value)
+      },
+    ),
+    
+    #Create the number of votes column
+    n = colDef(
+      name = "No. of Selections",
+      defaultSortOrder = "desc",
+      cell = function(value) {
+        width <- paste0(value * 100 / max(dataWA$n), "%")
+        value <- format(value, width = 9, justify = "right")
+        bar <- div(
+          class = "bar-chart",
+          style = list(marginRight = "6px"),
+          div(class = "bar", style = list(width = width, backgroundColor = "#fbee01"))
+        )
+        div(class = "bar-cell", span(class = "number", value), bar)
+      }
+    ),
+
+    #Create the percentage column
+    #Based on: https://glin.github.io/reactable/articles/building-twitter-followers.html
+    per = colDef(
+      name = "Percentage of Selections",
+      defaultSortOrder = "desc",
+      #Java style formatting
+      cell = JS("function(cellInfo) {
+        // Format as percentage
+        const pct = (cellInfo.value * 100).toFixed(1) + '%'
+        // Pad single-digit numbers
+        let value = pct.padStart(5)
+        // Render bar chart
+        return (
+          '<div class=\"bar-cell\">' +
+            '<span class=\"number\">' + value + '</span>' +
+            '<div class=\"bar-chart\" style=\"background-color: #e1e1e1\">' +
+              '<div class=\"bar\" style=\"width: ' + pct + '; background-color: #04897a\"></div>' +
+            '</div>' +
+          '</div>'
+        )
+      }"),
+      html = TRUE,
+    )
+
+  ), #end of column list
+
+  #Set compact style
+  compact = TRUE,
+
+  #Set table class
+  class = "votes-tbl"
+
+)
+
+#Add the title and subtitle
+div(class = "tbl-votes",
+    div(class = "votes-header",
+        div(class = "votes-title", "Wing Attack"),
+    ),
+    tblWA
+)
+
+```
+
+```{r tableGA, echo = FALSE}
+
+#Get the vote counts for goal keeps
+dataGA <- select(data, GA) %>% count(GA)
+
+#Rename player name column
+names(dataGA)[names(dataGA) == "GA"] <- "player"
+
+#Convert the number of votes to percentage
+dataGA$per <- dataGA$n / nrow(data)
+
+#Create table
+tblGA <- reactable(
+
+  #Set data
+  dataGA,
+
+  #Set pagination
+  pagination = TRUE,
+  defaultPageSize = 10,
+
+  #Set parameters
+  highlight = TRUE,
+  searchable = FALSE,
+
+  #Set the default sort column
+  defaultSorted = "per",
+  defaultSortOrder = "desc",
+
+  #Set default column parameters
+  defaultColDef = colDef(headerClass = "header", align = "left"),
+
+  #Create a list of the columns
+  columns = list(
+
+    #Create the player column
+    player = colDef(
+      name = "Player",
+      defaultSortOrder = "asc",
+      align = "left",
+      maxWidth = 300,
+      filterable = FALSE,
+      class = "cell group",
+      headerStyle = list(fontWeight = 700),
+      style = list(fontSize = "14px"),
+      cell = function(value) {
+        div(class = "player-name", value)
+      },
+    ),
+    
+    #Create the number of votes column
+    n = colDef(
+      name = "No. of Selections",
+      defaultSortOrder = "desc",
+      cell = function(value) {
+        width <- paste0(value * 100 / max(dataGA$n), "%")
+        value <- format(value, width = 9, justify = "right")
+        bar <- div(
+          class = "bar-chart",
+          style = list(marginRight = "6px"),
+          div(class = "bar", style = list(width = width, backgroundColor = "#fbee01"))
+        )
+        div(class = "bar-cell", span(class = "number", value), bar)
+      }
+    ),
+
+    #Create the percentage column
+    #Based on: https://glin.github.io/reactable/articles/building-twitter-followers.html
+    per = colDef(
+      name = "Percentage of Selections",
+      defaultSortOrder = "desc",
+      #Java style formatting
+      cell = JS("function(cellInfo) {
+        // Format as percentage
+        const pct = (cellInfo.value * 100).toFixed(1) + '%'
+        // Pad single-digit numbers
+        let value = pct.padStart(5)
+        // Render bar chart
+        return (
+          '<div class=\"bar-cell\">' +
+            '<span class=\"number\">' + value + '</span>' +
+            '<div class=\"bar-chart\" style=\"background-color: #e1e1e1\">' +
+              '<div class=\"bar\" style=\"width: ' + pct + '; background-color: #04897a\"></div>' +
+            '</div>' +
+          '</div>'
+        )
+      }"),
+      html = TRUE,
+    )
+
+  ), #end of column list
+
+  #Set compact style
+  compact = TRUE,
+
+  #Set table class
+  class = "votes-tbl"
+
+)
+
+#Add the title and subtitle
+div(class = "tbl-votes",
+    div(class = "votes-header",
+        div(class = "votes-title", "Goal Attack"),
+    ),
+    tblGA
+)
+
+```
+
+```{r tableGS, echo = FALSE}
+
+#Get the vote counts for goal keeps
+dataGS <- select(data, GS) %>% count(GS)
+
+#Rename player name column
+names(dataGS)[names(dataGS) == "GS"] <- "player"
+
+#Convert the number of votes to percentage
+dataGS$per <- dataGS$n / nrow(data)
+
+#Create table
+tblGS <- reactable(
+
+  #Set data
+  dataGS,
+
+  #Set pagination
+  pagination = TRUE,
+  defaultPageSize = 10,
+
+  #Set parameters
+  highlight = TRUE,
+  searchable = FALSE,
+
+  #Set the default sort column
+  defaultSorted = "per",
+  defaultSortOrder = "desc",
+
+  #Set default column parameters
+  defaultColDef = colDef(headerClass = "header", align = "left"),
+
+  #Create a list of the columns
+  columns = list(
+
+    #Create the player column
+    player = colDef(
+      name = "Player",
+      defaultSortOrder = "asc",
+      align = "left",
+      maxWidth = 300,
+      filterable = FALSE,
+      class = "cell group",
+      headerStyle = list(fontWeight = 700),
+      style = list(fontSize = "14px"),
+      cell = function(value) {
+        div(class = "player-name", value)
+      },
+    ),
+    
+    #Create the number of votes column
+    n = colDef(
+      name = "No. of Selections",
+      defaultSortOrder = "desc",
+      cell = function(value) {
+        width <- paste0(value * 100 / max(dataGS$n), "%")
+        value <- format(value, width = 9, justify = "right")
+        bar <- div(
+          class = "bar-chart",
+          style = list(marginRight = "6px"),
+          div(class = "bar", style = list(width = width, backgroundColor = "#fbee01"))
+        )
+        div(class = "bar-cell", span(class = "number", value), bar)
+      }
+    ),
+
+    #Create the percentage column
+    #Based on: https://glin.github.io/reactable/articles/building-twitter-followers.html
+    per = colDef(
+      name = "Percentage of Selections",
+      defaultSortOrder = "desc",
+      #Java style formatting
+      cell = JS("function(cellInfo) {
+        // Format as percentage
+        const pct = (cellInfo.value * 100).toFixed(1) + '%'
+        // Pad single-digit numbers
+        let value = pct.padStart(5)
+        // Render bar chart
+        return (
+          '<div class=\"bar-cell\">' +
+            '<span class=\"number\">' + value + '</span>' +
+            '<div class=\"bar-chart\" style=\"background-color: #e1e1e1\">' +
+              '<div class=\"bar\" style=\"width: ' + pct + '; background-color: #04897a\"></div>' +
+            '</div>' +
+          '</div>'
+        )
+      }"),
+      html = TRUE,
+    )
+
+  ), #end of column list
+
+  #Set compact style
+  compact = TRUE,
+
+  #Set table class
+  class = "votes-tbl"
+
+)
+
+#Add the title and subtitle
+div(class = "tbl-votes",
+    div(class = "votes-header",
+        div(class = "votes-title", "Goal Shooter"),
+    ),
+    tblGS
+)
+
+```
+
+---
+
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+
+```{r ref.label="table", eval=FALSE}
+```
+
+```{r}
+tags$link(href = "https://fonts.googleapis.com/css?family=Karla:400,700|Fira+Mono&display=fallback", rel = "stylesheet")
+```
+
+
+```{css}
+
+/* Whole document: */
+body{
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12pt;
+}
+
+/* Headers */
+h1{
+  font-size: 32px;
+  font-weight: bold;
+}
+h2{
+  font-size: 24px;
+  font-weight: bold;
+}
+h3{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Styles for the table container, title, and subtitle */
+.tbl-votes {
+  /* Center the table */
+  margin: 0 auto;
+  /* Reduce the table width */
+  width: 700px;
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.lineup-votes {
+  /* Center the table */
+  margin: 0 auto;
+  /* Reduce the table width */
+  width: 600px;
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.votes-header {
+  margin: 8px 0;
+  font-size: 16px;
+}
+
+.lineup-header {
+  margin: 8px 0;
+  font-size: 16px;
+}
+
+.votes-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.lineup-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Styles for the table */
+.votes-tbl {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.votes-tbl a {
+  color: inherit;
+}
+
+/* Styles for the column headers */
+.header {
+  border-bottom: 2px solid #555;
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.header:hover {
+  background-color: #eee;
+}
+
+/* Styles for the bar charts */
+.bar-cell {
+  display: flex;
+  align-items: center;
+}
+
+.player-name {
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.pos-name {
+  font-family: Karla, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 850;
+  color: "#04897a";
+}
+
+.number {
+  font-family: "Fira Mono", Consolas, Monaco, monospace;
+  font-size: 14px;
+  white-space: pre;
+}
+
+.bar-chart {
+  flex-grow: 1;
+  margin-left: 6px;
+  height: 14px;
+}
+
+.bar {
+  height: 100%;
+}
+
+/* Others from existing docs */
+.author,.date{
+    display: none;
+}
+
+.title {
+  margin: 18px 0;
+  font-size: 16px;
+}
+
+.title h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+```
+
+
+```{css echo=FALSE}
+/* rmarkdown html documents */
+.main-container {
+  max-width: 1054px !important;
+}
+
+h1.title {
+  display: none;
+}
+
+/* pkgdown articles */
+.contents {
+  width: 1054px;
+}
+
+.page-header {
+  display: none;
+}
+```
+
+
